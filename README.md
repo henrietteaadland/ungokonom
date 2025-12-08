@@ -72,7 +72,7 @@ git checkout -b feature/navn-på-oppgave
 
 -------------------------------------------------------------------------
 
-3.3 Commit-prosess
+3.3 Commit-process
 
 Gjør små og hyppige commits slik at det blir lett å se hva som er gjort:
 
