@@ -1,62 +1,25 @@
-// Skift mellom login og register
-function showRegister() {
-    document.getElementById("loginForm").classList.remove("active");
-    document.getElementById("registerForm").classList.add("active");
-}
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+  e.preventDefault(); // Stop page refresh
 
-function showLogin() {
-    document.getElementById("registerForm").classList.remove("active");
-    document.getElementById("loginForm").classList.add("active");
-}
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const btn = document.querySelector('.login-btn');
+  const originalText = btn.innerText;
 
-// Registrer bruker
-function register() {
-    const username = document.getElementById("reg-username").value.trim();
-    const password = document.getElementById("reg-password").value.trim();
-
-    if (!username || !password) {
-        alert("Vennligst fyll inn alle felt.");
-        return;
-    }
-
-    // Sjekk om bruker finnes allerede
-    let users = JSON.parse(localStorage.getItem("users")) || [];
-
-    const exists = users.find(u => u.username === username);
-
-    if (exists) {
-        alert("Brukernavnet er allerede tatt.");
-        return;
-    }
-
-    // Lagre bruker
-    users.push({
-        username: username,
-        password: password
-    });
-
-    localStorage.setItem("users", JSON.stringify(users));
-
-    alert("Bruker opprettet! Du kan nå logge inn.");
-    showLogin();
-}
-
-// Logg inn
-function login() {
-    const username = document.getElementById("login-username").value.trim();
-    const password = document.getElementById("login-password").value.trim();
-
-    let users = JSON.parse(localStorage.getItem("users")) || [];
-
-    const user = users.find(u => u.username === username && u.password === password);
-
-    if (!user) {
-        alert("Feil brukernavn eller passord.");
-        return;
-    }
-
-    alert("Logget inn som: " + username);
-
-    // Her kan du sende brukeren til en ny side:
-    // window.location.href = "dashboard.html";
-}
+  if(email && password) {
+    // 1. Change button to loading state (Norwegian)
+    btn.innerText = 'LOGGER INN...';
+    btn.style.backgroundColor = '#00C1A3'; // Teal accent
+    
+    // 2. Simulate server delay
+    setTimeout(() => {
+      alert(`Velkommen til Ung Økonom, ${email}!`);
+      
+      // 3. Reset button
+      btn.innerText = originalText;
+      btn.style.backgroundColor = ''; 
+      
+      // Here you would normally redirect: window.location.href = '/dashboard';
+    }, 1500);
+  }
+});
