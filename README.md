@@ -209,4 +209,4 @@ Scrumwise brukes til å holde oversikt over oppgaver. Hver oppgave skal ha en eg
 - Scrumwise
 - VS Code
 
-Teknologier: HTML, CSS, JavaScript
+Teknologier: HTML, CSS, JavaScript.
