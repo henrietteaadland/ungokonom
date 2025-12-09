@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+
+    <div id="loginForm" class="form active">
+        <h2>Logg inn</h2>
+
+        <input type="text" id="login-username" placeholder="Brukernavn" required>
+        <input type="password" id="login-password" placeholder="Passord" required>
+
+        <button onclick="login()">Logg inn</button>
+
+        <p>Har du ikke bruker?  
+            <a href="#" onclick="showRegister()">Registrer</a>
+        </p>
+    </div>
+
+
+    <div id="registerForm" class="form">
+        <h2>Registrer bruker</h2>
+
+        <input type="text" id="reg-username" placeholder="Velg brukernavn" required>
+        <input type="password" id="reg-password" placeholder="Velg passord" required>
+
+        <button onclick="register()">Opprett bruker</button>
+
+        <p>Har du allerede bruker?
+            <a href="#" onclick="showLogin()">Logg inn</a>
+        </p>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
