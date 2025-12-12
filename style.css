@@ -1,8 +1,8 @@
-/* --- Color Palette based on Ung Økonom Logo --- */
+/* --- Fargepalett basert på Ung Økonom Logo --- */
 :root {
-  --brand-blue: #004B8D;       /* Deep Blue */
-  --brand-red: #E31837;        /* Red */
-  --brand-teal: #00C1A3;       /* Teal Accent */
+  --brand-blue: #004B8D;       /* Dyp Blå */
+  --brand-red: #E31837;        /* Rød */
+  --brand-teal: #00C1A3;       /* Teal/Turkis */
   --input-border: #e1e1e1;
   --text-main: #333333;
   --text-secondary: #888888;
@@ -27,17 +27,17 @@ body, html {
   width: 100%;
 }
 
-/* Left Panel (Image) */
+/* Venstre Panel (Bilde) */
 .left-panel {
   flex: 1;
-  /* Image of woman at desk with calculator */
+  /* Bilde av dame ved skrivebord med kalkulator */
   background-image: url('https://plus.unsplash.com/premium_photo-1679524520930-b810f59924b3?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
   background-size: cover;
   background-position: center;
   position: relative;
 }
 
-/* Blue Tint Overlay */
+/* Blått filter over bildet */
 .left-panel::after {
   content: '';
   position: absolute;
@@ -45,7 +45,7 @@ body, html {
   background: rgba(0, 75, 141, 0.1);
 }
 
-/* Right Panel (Form) */
+/* Høyre Panel (Skjema) */
 .right-panel {
   flex: 1;
   background-color: #ffffff;
@@ -61,7 +61,7 @@ body, html {
   max-width: 400px;
 }
 
-/* --- Typography --- */
+/* --- Typografi --- */
 .brand-title {
   color: var(--brand-blue);
   font-size: 1.5rem;
@@ -80,7 +80,7 @@ h2 {
   text-align: left;
 }
 
-/* --- Form Elements --- */
+/* --- Skjema Elementer --- */
 .input-group {
   margin-bottom: 20px;
 }
@@ -134,7 +134,7 @@ h2 {
   color: var(--brand-blue);
 }
 
-/* --- Buttons --- */
+/* --- Knapper --- */
 .login-btn {
   width: 100%;
   padding: 15px;
@@ -158,7 +158,36 @@ h2 {
   transform: scale(0.98);
 }
 
-/* Mobile Responsive */
+/* --- Registreringsseksjon (Linker) --- */
+.register-section {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.register-section a {
+  color: var(--brand-blue);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.register-section a:hover {
+  text-decoration: underline;
+  color: var(--brand-teal);
+}
+
+/* --- Feilmelding --- */
+.error-message {
+  color: var(--brand-red);
+  font-size: 0.85rem;
+  margin-top: 5px;
+  display: none; /* Skjult som standard */
+  font-weight: 600;
+}
+
+/* Mobil-tilpasning */
 @media (max-width: 768px) {
   .left-panel {
     display: none;
