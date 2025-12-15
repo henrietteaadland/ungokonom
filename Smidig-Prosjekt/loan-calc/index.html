@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ung Økonom – Lånekalkulator</title>
+
+  <link rel="stylesheet" href="../loan-calc/css/styles.css">
+</head>
+
+<body>
+
+  <main class="loan_page">
+
+    <!-- Felles header for ALLE steg -->
+    <header class="page_header">
+      <h1>Lånekalkulator</h1>
+      <p>Stupid simple lånekalkulator som gir deg en rask og enkel oversikt over lånekostnadene dine.</p>
+
+      <!-- Enkel "stepper" som viser hvor langt du har kommet -->
+      <div class="stepper">
+        <div class="stepper_dot">1</div>
+        <div class="stepper_dot">2</div>
+        <div class="stepper_dot">3</div>
+        <div class="stepper_dot">4</div>
+      </div>
+    </header>
+
+    <!--
+    ------------------------------
+    Steg 1: Velg lånetype
+    ------------------------------
+    -->
+
+    <section id="step_1" class="step step_active">
+      <h2>Hva ønsker du å låne til?</h2>
+      <p class="step_subtitle">
+        Velg hvilken type lån du vil se på. Du kan endre dette senere ved å starte på nytt.
+      </p>
+
+      <div class="loan_type_grid">
+        <!-- Kort 1: Boliglån -->
+        <article id="loan_type_housing_card" class="loan_card">
+          <h3>Bolig</h3>
+          <p>For deg som vil kjøpe leilighet eller hus.</p>
+          <ul>
+            <li>Lang nedbetalingstid</li>
+            <li>Vanligvis lavere rente enn billån</li>
+            <li>Ofte krav til egenkapital (for eksempel 15 %)</li>
+          </ul>
+        </article>
+
+        <!-- Kort 2: Billån -->
+        <article id="loan_type_car_card" class="loan_card">
+          <h3>Bil</h3>
+          <p>For deg som vil kjøpe bil.</p>
+          <ul>
+            <li>Kortere nedbetalingstid</li>
+            <li>Ofte høyere rente enn boliglån</li>
+            <li>Ofte lavere krav til egenkapital</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="step_actions">
+        <button id="btn_next_step_1" class="btn_primary next_btn">Neste</button>
+      </div>
+    </section>
+
+    <!-- 
+    --------------------------------
+    Steg 2: Fyll inn tallene dine
+    --------------------------------
+    -->
+
+    <section id="step_2" class="step">
+      <h2>Fyll inn tallene dine</h2>
+      <p class="step_subtitle">
+        Skriv inn kjøpesum, egenkapital, rente og hvor mange år du vil bruke på å betale ned lånet.
+      </p>
+
+      <div class="input_grid">
+        <!-- Kjøpesum -->
+        <div>
+          <label for="purchase_price_input">Kjøpesum</label>
+          <input
+            id="purchase_price_input"
+            type="text"
+            placeholder="3 000 000">
+        </div>
+
+        <!-- Egenkapital -->
+        <div>
+          <label for="equity_input">Egenkapital</label>
+          <input
+            id="equity_input"
+            type="text"
+            placeholder="300 000">
+        </div>
+
+        <!-- Rente -->
+        <div>
+          <label>Rente (%)</label>
+          <input
+            id="interest_input"
+            type="number"
+            step="0.1"
+            min="0"
+            placeholder="5,2">
+        </div>
+
+        <!-- Nedbetalingstid -->
+        <div>
+          <label for="years_input">Nedbetalingstid (år)</label>
+          <input
+            id="years_input"
+            type="number"
+            step="1"
+            min="1"
+            placeholder="25">
+        </div>
+      </div>
+
+      <p class="step_footnote">
+        Tallene er kun eksempler og ikke tilbud om lån. Renter og vilkår vil variere mellom banker.
+      </p>
+
+      <div class="step_actions">
+        <button id="btn_back_step_2" class="btn_secondary">Tilbake</button>
+        <button id="btn_next_step_2" class="btn_primary next_btn">Beregn lån</button>
+      </div>
+    </section>
+
+    <!-- 
+    --------------------------------
+    Steg 3: Oppsummering
+    --------------------------------
+    -->
+
+    <section id="step_3" class="step">
+      <h2>Oppsummering</h2>
+
+      <div class="summary_box">
+        <p><strong>Lånebeløp:</strong> <span id="step3_loan_amount"></span></p>
+        <p><strong>Mnd-kostnad:</strong> <span id="step3_monthly"></span></p>
+        <p><strong>Totalt betalt:</strong> <span id="step3_total_paid"></span></p>
+        <p><strong>Totalt i renter:</strong> <span id="step3_total_interest"></span></p>
+      </div>
+      <div class="summary_box loan_chart_container">
+        <canvas id="step3_chart_canvas"></canvas>
+      </div>
+
+      <div class="step_actions">
+        <button id="btn_back_step_3" class="btn_secondary">Tilbake</button>
+        <button id="btn_next_step_3" class="btn_primary">Neste</button>
+      </div>
+    </section>
+
+    <!-- 
+    --------------------------------
+    Steg 4: Scenarier
+    --------------------------------
+    -->
+
+    <section id="step_4" class="step">
+
+      <h2>Hva hvis du endrer litt på tallene?</h2>
+      <p class="step_subtitle">
+        Her ser du hvordan små endringer i egenkapital, rente eller nedbetalingstid
+        kan påvirke kostnaden din.
+      </p>
+      <div class="summary_box loan_chart_container">
+        <canvas id="step4_chart_canvas"></canvas>
+      </div>
+
+      <div class="scenario_grid">
+
+        <!-- Legge til mer i egenkapital for å se mulige besparelser -->
+        <div class="scenario_card">
+          <h3>Mer egenkapital</h3>
+          <p>Ved å øke egenkapitalen kan du redusere lånebeløpet og dermed spare penger på renter.</p>
+
+          <label for="extra_equity_input">Øk egenkapitalen med:</label>
+          <div class="scenario_input_row">
+            <input id="extra_equity_input" type="text" inputmode="numeric" value="0" />
+            <span class="scenario_input_suffix">kr</span>
+          </div>
+
+          <label for="extra_equity_percent_range">
+            Endre med <strong><span id="extra_equity_percent_label">0</span> %</strong> av egenkapitalen
+          </label>
+          <input
+            id="extra_equity_percent_range"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="0" />
+
+          <p>Kostnad per måned: <strong><span data-scenario="more_equity_monthly"></span> kr</strong></p>
+          <p>Totalt i renter: <strong><span data-scenario="more_equity_interest"></span> kr</strong></p>
+          <p class="scenario_result_small">
+            Du betaler omtrent <strong><span data-scenario="more_equity_savings"></span> kr</strong> mindre i renter enn før.
+          </p>
+        </div>
+
+        <!-- Endring i rente (samme felt for + / - prosent) -->
+        <div class="scenario_card">
+          <h3>Endre rente</h3>
+          <p>
+            Dra i linja eller skriv inn hvor mange prosent renten endrer seg.
+            Negativt tall betyr lavere rente.
+          </p>
+
+          <label for="interest_change_input">Endre renten med:</label>
+          <div class="scenario_input_row">
+            <input id="interest_change_input" type="number" step="0.1" value="0" />
+            <span class="scenario_input_suffix">%</span>
+          </div>
+
+          <label for="interest_change_range">
+            Dra for å endre: <strong><span id="interest_change_label">0,0</span> prosent</strong>
+          </label>
+          <input
+            id="interest_change_range"
+            type="range"
+            min="-5"
+            max="5"
+            step="0.1"
+            value="0" />
+
+          <p>Mnd-kostnad: <strong><span data-scenario="interest_change_monthly"></span> kr</strong></p>
+          <p>Totalt i renter: <strong><span data-scenario="interest_change_interest"></span> kr</strong></p>
+          <p class="scenario_result_small" id="interest_change_diff_line">
+            Du betaler omtrent <strong><span data-scenario="interest_change_diff"></span> kr</strong> <span id="interest_change_diff_word">mer</span> i renter enn før.
+          </p>
+        </div>
+      </div>
+
+      <div class="step_actions">
+        <button id="btn_back_step_4" class="btn_secondary">Tilbake</button>
+        <button id="btn_restart" class="btn_primary">Start på nytt</button>
+      </div>
+    </section>
+
+  </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1"></script>
+    <script src="./js/charts.js" defer></script>
+    <script src="./js/helpers.js" defer></script>
+    <script src="./js/calculator.js" defer></script>
+    <script src="./js/scenarios.js" defer></script>
+    <script src="./js/navigation.js" defer></script>
+
+</body>
+</html>

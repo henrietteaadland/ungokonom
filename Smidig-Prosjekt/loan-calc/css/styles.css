@@ -1,0 +1,404 @@
+/* ============================================================
+   FIL: styles.css
+   Enkel styling for lånekalkulatoren
+   ------------------------------------------------------------
+   Fokus:
+   - Ren, luftig layout
+   - Kort som er tydelige å klikke på
+   - God lesbarhet
+   ============================================================ */
+
+/* ========= BASIS ========= */
+
+:root {
+  --bg-body: #0f172a;
+  --bg-card: #f9fafb;
+  --accent: #6366f1;
+  --accent-soft: rgba(99, 102, 241, 0.12);
+  --accent-strong: #4f46e5;
+  --border-subtle: #e5e7eb;
+  --text-main: #0f172a;
+  --text-muted: #6b7280;
+  --error: #dc2626;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #1e293b, #020617);
+  color: var(--text-main);
+}
+
+/* Sentrerer kortet på siden */
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* ========= HOVEDKORT ========= */
+
+.loan_page {
+  max-width: 960px;
+  width: 100%;
+  background: #f9fafb;
+  border-radius: 24px;
+  padding: 32px 24px 28px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.35);
+}
+
+/* ========= HEADER ========= */
+
+.page_header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.page_header h1 {
+  margin: 0 0 8px 0;
+  font-size: 1.75rem;
+  letter-spacing: -0.03em;
+}
+
+.page_header p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+/* Liten "stepper" som viser fremdrift */
+
+.stepper {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.stepper_dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 23, 42, 0.25);
+  background: rgba(15, 23, 42, 0.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.stepper_dot_active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+/* ========= STEG-SEKSJONER ========= */
+
+.step {
+  display: none;
+}
+
+.step.step_active {
+  display: block;
+}
+
+/* ========= STEG-OVERSKRIFTER ========= */
+
+h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.4rem;
+}
+
+.step_subtitle {
+  margin: 0 0 16px 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* ========= STEG 1: VALG AV LÅNETYPE ========= */
+
+.loan_type_grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.loan_card {
+  border-radius: 16px;
+  border: 1px solid var(--border-subtle);
+  padding: 16px 16px 14px;
+  background: #ffffff;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.12s ease;
+}
+
+.loan_card h3 {
+  margin: 0 0 6px 0;
+  font-size: 1.05rem;
+}
+
+.loan_card p {
+  margin: 0 0 8px 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.loan_card ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.loan_card li {
+  margin-bottom: 2px;
+}
+
+/* Hover-effekt */
+
+.loan_card:hover {
+  border-color: var(--accent);
+  background: #f5f3ff;
+  box-shadow: 0 12px 28px rgba(99, 102, 241, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Valgt kort */
+
+.loan_card.selected {
+  border-color: var(--accent-strong);
+  background: #eef2ff;
+  box-shadow: 0 16px 40px rgba(79, 70, 229, 0.35);
+}
+
+/* ========= STEG 2: INPUT-FELT ========= */
+
+.input_grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 20px 0 8px 0;
+}
+
+.input_grid label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+}
+
+.input_grid input {
+  width: 100%;
+  padding: 10px 11px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  font-size: 0.95rem;
+  outline: none;
+  transition:
+    border-color 0.12s ease,
+    box-shadow 0.12s ease,
+    background-color 0.12s ease;
+}
+
+.input_grid input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-soft);
+  background: #ffffff;
+}
+
+/* Info-tekst nederst */
+
+.step_footnote {
+  margin: 4px 0 0 0;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* ========= STEG 3 & 4: OPPSUMMERING / SCENARIER ========= */
+
+.summary_box {
+  border-radius: 14px;
+  border: 1px solid var(--border-subtle);
+  background: #ffffff;
+  padding: 14px 16px;
+  margin: 14px 0 18px 0;
+  font-size: 0.95rem;
+}
+
+.summary_box p {
+  margin: 4px 0;
+}
+
+.summary_box strong {
+  font-weight: 600;
+}
+
+/* Scenarierutenett i steg 4 */
+
+.scenario_grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.scenario_card {
+  border-radius: 14px;
+  border: 1px solid var(--border-subtle);
+  background: #ffffff;
+  padding: 14px 14px 12px;
+  font-size: 0.9rem;
+}
+
+.scenario_card h3 {
+  margin: 0 0 4px 0;
+  font-size: 1rem;
+}
+
+.scenario_card p {
+  margin: 4px 0;
+}
+
+/* Input-rad for scenario */
+
+.scenario_input_row {
+  display: flex;
+  align-items: center;
+  margin: 8px 0 6px 0;
+  gap: 6px;
+}
+
+.scenario_input_row input {
+  flex: 1;
+  padding: 7px 9px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  font-size: 0.9rem;
+}
+
+.scenario_input_suffix {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Mindre forklarende tekst nederst i hvert scenario */
+
+.scenario_result_small {
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* ========= KNAPPER ========= */
+
+.step_actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.step_actions button {
+  border-radius: 999px;
+  padding: 9px 18px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn_primary {
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 10px 20px rgba(79, 70, 229, 0.35);
+  transition:
+    background 0.12s ease,
+    transform 0.08s ease,
+    box-shadow 0.12s ease;
+}
+
+.btn_primary:hover {
+  background: var(--accent-strong);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(79, 70, 229, 0.45);
+}
+
+.btn_secondary {
+  background: #ffffff;
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+}
+
+/* "Neste"-knapp med lite pil-ikon (tekstlig) */
+
+.next_btn::after {
+  content: "→";
+  font-size: 0.95rem;
+}
+
+/* ========= GRAFISK VISNING ========= */
+
+.loan_chart_container {
+  margin-top: 24px;
+}
+
+.loan_chart_container canvas {
+  width: 100%;
+  max-width: 480px;
+  height: 260px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ========= RESPONSIV TILPASNING ========= */
+
+@media (max-width: 768px) {
+  .loan_page {
+    padding: 20px 16px 18px;
+  }
+
+  .loan_type_grid {
+    grid-template-columns: 1fr;
+  }
+
+  .input_grid {
+    grid-template-columns: 1fr;
+  }
+
+  .scenario_grid {
+    grid-template-columns: 1fr;
+  }
+
+  .step_actions {
+    justify-content: center;
+  }
+
+  .step_actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .step_actions button {
+    width: 100%;
+  }
+}
