@@ -171,13 +171,13 @@ function setup_step2() {
     const years = Number(String(years_input.value || "").trim());
 
     /*
-    ----------------------
+    -------------------------------
     Enkel validering av input
-    ----------------------
+    ----------------------------------
 
     */
-    if (isNaN(purchase_price) || purchase_price <= 0) {
-      alert("Skriv inn en gyldig kjøpesum.");
+    if (isNaN(purchase_price) || purchase_price <= 10_000 || purchase_price > 50_000_000) {
+      alert("Kjøpesum må være mellom 10 000 kr og 50 000 000 kr.");
       return;
     }
 
@@ -186,13 +186,13 @@ function setup_step2() {
       return;
     }
 
-    if (isNaN(interest_rate) || interest_rate <= 0) {
-      alert("Skriv inn en gyldig rente.");
+    if (isNaN(interest_rate) || interest_rate <= 0 || interest_rate > 25) {
+      alert("Maks tillatt rente er 25%.");
       return;
     }
 
-    if (isNaN(years) || years <= 0) {
-      alert("Skriv inn hvor mange år du vil ha nedbetalingstid.");
+    if (isNaN(years) || years <= 0 || years > 50) {
+      alert("Maks tillatt nedbetalingstid er 50 år.");
       return;
     }
 
@@ -215,10 +215,14 @@ function setup_step2() {
       result: result
     };
 
-    update_step3();
     show_step(3);
+
+    requestAnimationFrame(function () {
+      update_step3();
+    });
   });
 }
+
 
 /*
 ------------------------------------------------------------

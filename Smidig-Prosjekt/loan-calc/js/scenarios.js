@@ -157,9 +157,9 @@ function calculate_more_equity_result(extra_equity_amount) {
   const extra_equity = Math.max(0, Number(extra_equity_amount) || 0);
 
   /*
-  ----------------------
+  ---------------------------------
   Kan ikke redusere lånet under 0
-  ----------------------
+  ---------------------------------
   */
   const adjusted_loan_amount = Math.max(0, base_loan_amount - extra_equity);
 

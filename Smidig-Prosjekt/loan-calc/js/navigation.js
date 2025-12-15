@@ -97,13 +97,16 @@ function setup_navigation() {
   }
 
   if (btn_next_3) {
-    btn_next_3.addEventListener("click", function () {
-      if (!current_loan) {
-        alert("Du må først fylle inn tallene i steg 2 og beregne lånet.");
-        return;
-      }
+  btn_next_3.addEventListener("click", function () {
+    if (!current_loan) {
+      alert("Du må først fylle inn tallene i steg 2 og beregne lånet.");
+      return;
+    }
 
-      if (!step4_initialized) {
+    show_step(4);
+
+    if (!step4_initialized) {
+      requestAnimationFrame(function () {
         init_step4({
           loan_amount: current_loan.loan_amount,
           interest_rate: current_loan.interest_rate,
@@ -111,11 +114,11 @@ function setup_navigation() {
           equity: current_loan.equity
         });
         step4_initialized = true;
-      }
+      }); 
+    }
+  });
+}
 
-      show_step(4);
-    });
-  }
 
   if (btn_restart) {
     btn_restart.addEventListener("click", function () {
