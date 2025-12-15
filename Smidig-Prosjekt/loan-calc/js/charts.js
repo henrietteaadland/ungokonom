@@ -76,26 +76,37 @@ function render_step4_chart(base_input, base_series, scenario_series) {
     step4_chart = null;
   }
 
-  step4_chart = new Chart(context, {
-    type: "line",
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: "Originalt lån (restgjeld)",
-          data: base_series.balances,
-          tension: 0.25,
-          pointRadius: 0
-        },
-        {
-          label: "Etter endring (restgjeld)",
-          data: scenario_data,
-          tension: 0.25,
-          pointRadius: 0,
-          hidden: !show_scenario
-        }
-      ]
-    },
+ step4_chart = new Chart(context, { 
+  type: "line",
+  data: {
+    labels: labels,
+    datasets: [
+  {
+    label: "Originalt lån (restgjeld)",
+    data: base_series.balances,
+    tension: 0.25,
+    borderWidth: 2,
+    borderDash: [6, 4],
+    pointRadius: function (ctx) {
+      const i = ctx.dataIndex;
+      const last = ctx.dataset.data.length - 1;
+      return (i === 0 || i === last) ? 4 : 0;
+    }
+  },
+  {
+    label: "Etter endring (restgjeld)",
+    data: scenario_data,
+    tension: 0.25,
+    borderWidth: 3,
+    hidden: !show_scenario,
+    pointRadius: function (ctx) {
+      const i = ctx.dataIndex;
+      const last = ctx.dataset.data.length - 1;
+      return (i === 0 || i === last) ? 5 : 0;
+    }
+  }
+]
+  },
     options: {
       responsive: true,
       maintainAspectRatio: false,
