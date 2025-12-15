@@ -139,7 +139,7 @@ nav ul li a {
 
 
 .loan_page {
-  max-width: 1100px;
+  max-width: 2000px;
   margin: 40px auto 70px;
   padding: 0 5%;
 }
@@ -414,15 +414,29 @@ h2 {
 }
 
 /* Graf */
+.loan_chart_container {
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-width: 1200px;
+  margin: 16px auto 0;;
+}
 
 .loan_chart_container canvas {
   width: 100%;
-  max-width: 700px;
-  height: 280px;
+  height: 100%;
   display: block;
-  margin: 0 auto;
 }
 
+.loan_chart_container_pie {
+  max-width: 600px;
+  height: 320px;
+}
+
+.loan_chart_container_pie canvas {
+  height: 100%;
+  width: 100%;
+}
 
 @media (max-width: 820px) {
   .input_grid {

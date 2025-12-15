@@ -68,7 +68,7 @@ function render_step4_chart(base_input, base_series, scenario_series) {
 
   /*
   ----------------------
-  Rebuild graf (robust)
+  Tegning av graf og hvordan det ser ut
   ----------------------
   */
   if (step4_chart !== null) {
@@ -106,6 +106,8 @@ function render_step4_chart(base_input, base_series, scenario_series) {
       scales: {
         y: {
           ticks: {
+            stepSize: 100000,
+            padding: 10,
             callback: function (value) {
               return format_number(value) + " kr";
             }

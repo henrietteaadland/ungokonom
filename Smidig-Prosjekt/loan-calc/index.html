@@ -170,11 +170,15 @@
 
       <div class="summary_box">
         <p><strong>Lånebeløp:</strong> <span id="step3_loan_amount"></span></p>
-        <p><strong>Mnd-kostnad:</strong> <span id="step3_monthly"></span></p>
-        <p><strong>Totalt betalt:</strong> <span id="step3_total_paid"></span></p>
-        <p><strong>Totalt i renter:</strong> <span id="step3_total_interest"></span></p>
+        <p><strong>Estimert månedskostnad:</strong> <span id="step3_monthly"></span></p>
+        <p><strong>Estimert total kostnad over lånets løpetid:</strong> <span id="step3_total_paid"></span></p>
+        <p><strong>Estimert forventet total renter:</strong> <span id="step3_total_interest"></span></p>
+        
+        <p class="step_footnote" style="margin-top: 12px;">
+    Beregningene er et estimat basert på oppgitte tall og forutsetter uendret rente gjennom hele perioden.
+  </p>
       </div>
-      <div class="summary_box loan_chart_container">
+      <div class="summary_box loan_chart_container loan_chart_container_pie">
         <canvas id="step3_chart_canvas"></canvas>
       </div>
 
