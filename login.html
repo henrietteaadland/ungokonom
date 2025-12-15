@@ -3,40 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login / Register</title>
+    <title>Innstillinger</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
 
+    <aside class="sidebar">
+        <h2>Innstillinger</h2>
 
-    <div id="loginForm" class="form active">
-        <h2>Logg inn</h2>
+        <button class="menu-btn" data-page="endre-passord">Endre passord</button>
+        <button class="menu-btn" data-page="sprakvalg">Språkvalg</button>
+        <button class="menu-btn" data-page="tema">Tema (lys/mørk modus)</button>
+        <button class="menu-btn" data-page="personvern">Personvern</button>
+        <button class="menu-btn" data-page="loggut">Logg ut av alle enheter</button>
+    </aside>
 
-        <input type="text" id="login-username" placeholder="Brukernavn" required>
-        <input type="password" id="login-password" placeholder="Passord" required>
+    <main class="content">
 
-        <button onclick="login()">Logg inn</button>
+        <!-- Default Page -->
+        <section id="home" class="page active">
+            <h1>Velkommen til innstillinger</h1>
+            <p>Velg et alternativ fra menyen til venstre.</p>
+        </section>
 
-        <p>Har du ikke bruker?  
-            <a href="#" onclick="showRegister()">Registrer</a>
-        </p>
-    </div>
+        <section id="endre-passord" class="page">
+            <h1>Endre passord</h1>
+            <input type="password" placeholder="Nytt passord">
+            <input type="password" placeholder="Bekreft passord">
+            <button class="save-btn">Lagre nytt passord</button>
+        </section>
 
+        <section id="sprakvalg" class="page">
+            <h1>Språkvalg</h1>
+            <select>
+                <option>Norsk</option>
+                <option>Engelsk</option>
+            </select>
+            <button class="save-btn">Lagre</button>
+        </section>
 
-    <div id="registerForm" class="form">
-        <h2>Registrer bruker</h2>
+        <section id="tema" class="page">
+            <h1>Tema</h1>
+            <button id="light">Lys modus</button>
+            <button id="dark">Mørk modus</button>
+        </section>
 
-        <input type="text" id="reg-username" placeholder="Velg brukernavn" required>
-        <input type="password" id="reg-password" placeholder="Velg passord" required>
+        <section id="personvern" class="page">
+            <h1>Personvern</h1>
+            <p>
+                UngØkonom er utviklet for å gi unge voksne enkel og trygg veiledning i leasing, lån og personlig økonomi,
+                og vi tar personvernet ditt på største alvor. For å kunne tilby deg relevante økonomiske beregninger
+                og en best mulig brukeropplevelse samler vi kun inn informasjon du selv legger inn i appen, som inntekter,
+                utgifter, lånebeløp og valg av språk eller tema. Disse opplysningene brukes utelukkende til å generere
+                budsjetter, beregninger og personlige anbefalinger, og deles ikke med tredjeparter.
 
-        <button onclick="register()">Opprett bruker</button>
+                Tekniske data som feilmeldinger og generell bruksmønsterstatistikk kan innhentes anonymt for å forbedre tjenesten.
+                Alle personlige opplysninger lagres sikkert med moderne sikkerhetsmekanismer, og passord lagres aldri i klartekst.
 
-        <p>Har du allerede bruker?
-            <a href="#" onclick="showLogin()">Logg inn</a>
-        </p>
-    </div>
+                Du kan når som helst endre passord, endre innstillinger eller be om sletting av kontoen din, noe som vil føre til
+                permanent sletting av alle personlige data knyttet til deg. UngØkonom bruker kun nødvendige informasjonskapsler
+                for pålogging og for å huske innstillinger, og ingen tredjeparts sporing benyttes.
+
+                Ved spørsmål om personvernet ditt eller om du ønsker innsyn, retting eller sletting av data, kan du kontakte oss
+                direkte via appens supportsystem. Bruk av UngØkonom innebærer at du godtar denne personvernpraksisen, og eventuelle
+                endringer vil bli kommunisert i appen når de trer i kraft.
+            </p>
+        </section>
+
+        <section id="loggut" class="page">
+            <h1>Logg ut av alle enheter</h1>
+            <p>
+                Dette vil logge deg ut på alle enheter du er innlogget på.  
+                Bruk dette hvis du mistenker at noen har tilgang til kontoen din.
+            </p>
+            <button class="danger logout-everywhere">Logg ut av alle enheter</button>
+        </section>
+
+    </main>
 
 </div>
 
