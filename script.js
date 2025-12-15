@@ -1,62 +1,47 @@
-// Skift mellom login og register
-function showRegister() {
-    document.getElementById("loginForm").classList.remove("active");
-    document.getElementById("registerForm").classList.add("active");
-}
+// PAGE SWITCHING
+const buttons = document.querySelectorAll(".menu-btn");
+const pages = document.querySelectorAll(".page");
 
-function showLogin() {
-    document.getElementById("registerForm").classList.remove("active");
-    document.getElementById("loginForm").classList.add("active");
-}
+buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        const pageId = btn.getAttribute("data-page");
 
-// Registrer bruker
-function register() {
-    const username = document.getElementById("reg-username").value.trim();
-    const password = document.getElementById("reg-password").value.trim();
-
-    if (!username || !password) {
-        alert("Vennligst fyll inn alle felt.");
-        return;
-    }
-
-    // Sjekk om bruker finnes allerede
-    let users = JSON.parse(localStorage.getItem("users")) || [];
-
-    const exists = users.find(u => u.username === username);
-
-    if (exists) {
-        alert("Brukernavnet er allerede tatt.");
-        return;
-    }
-
-    // Lagre bruker
-    users.push({
-        username: username,
-        password: password
+        pages.forEach(p => p.classList.remove("active"));
+        document.getElementById(pageId).classList.add("active");
     });
+});
 
-    localStorage.setItem("users", JSON.stringify(users));
+// THEME SWITCHING
+const lightBtn = document.getElementById("light");
+const darkBtn = document.getElementById("dark");
 
-    alert("Bruker opprettet! Du kan nå logge inn.");
-    showLogin();
-}
+lightBtn.addEventListener("click", () => {
+    document.body.classList.remove("dark-mode");
+});
 
-// Logg inn
-function login() {
-    const username = document.getElementById("login-username").value.trim();
-    const password = document.getElementById("login-password").value.trim();
+darkBtn.addEventListener("click", () => {
+    document.body.classList.add("dark-mode");
+});
 
-    let users = JSON.parse(localStorage.getItem("users")) || [];
+// LOGG UT AV ALLE ENHETER
+const logoutButtons = document.querySelectorAll(".logout-everywhere");
 
-    const user = users.find(u => u.username === username && u.password === password);
+logoutButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
 
-    if (!user) {
-        alert("Feil brukernavn eller passord.");
-        return;
-    }
+        const confirmLogout = confirm("Er du sikker på at du vil logge ut av alle enheter?");
 
-    alert("Logget inn som: " + username);
+        if (confirmLogout) {
 
-    // Her kan du sende brukeren til en ny side:
-    // window.location.href = "dashboard.html";
-}
+            // Simulerer utlogging
+            localStorage.clear();
+            sessionStorage.clear();
+
+            alert("Du er nå logget ut av alle enheter.");
+
+            // Returner til forsiden
+            pages.forEach(p => p.classList.remove("active"));
+            document.getElementById("home").classList.add("active");
+        }
+    });
+});
