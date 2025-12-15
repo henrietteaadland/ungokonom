@@ -109,3 +109,84 @@ function format_currency(value) {
   const rounded = Math.round(Number(value) || 0);
   return rounded.toLocaleString("nb-NO");
 }
+
+/*
+------------------------------------------------------------
+DEL 4B: format_number (brukes av chart-ticks)
+- Holder samme stil som format_currency
+------------------------------------------------------------
+*/
+function format_number(value) {
+  return format_currency(value);
+}
+
+/*
+------------------------------------------------------------
+DEL 5: Bygg restgjeld-serie (År 0..År N)
+- Returnerer { balances: [P, ..., 0-ish] }
+- Brukes av charts.js for steg 4
+------------------------------------------------------------
+
+@param {number} loan_amount
+@param {number} interest_rate_percent
+@param {number} years
+@return {{balances:number[]}}
+*/
+function build_balance_series(loan_amount, interest_rate_percent, years) {
+  var P = Number(loan_amount) || 0;
+  var y = Number(years) || 0;
+
+  var yearly_rate = (Number(interest_rate_percent) || 0) / 100;
+  var r = yearly_rate / 12;         /* månedlig rente */
+  var n = y * 12;                   /* antall måneder */
+
+  var balances = [];
+  var i = 0;
+
+  if (P <= 0 || y <= 0 || n <= 0) {
+    return { balances: [0] };
+  }
+
+  /*
+  ------------------------------------------------------------
+  Månedlig betaling (samme logikk som calculate_loan, men lokalt)
+  ------------------------------------------------------------
+  */
+  var M = 0;
+
+  if (r === 0) {
+    M = P / n;
+  } else {
+    var factor = Math.pow(1 + r, n);
+    M = P * (r * factor) / (factor - 1);
+  }
+
+  /*
+  ------------------------------------------------------------
+  Restgjeld etter k betalinger:
+  B_k = P*(1+r)^k - M*((1+r)^k - 1)/r
+  - Vi sampler ved k = 12*i (år)
+  ------------------------------------------------------------
+  */
+  balances.push(P);
+
+  for (i = 1; i <= y; i += 1) {
+    var k = i * 12;
+
+    var Bk = 0;
+
+    if (r === 0) {
+      Bk = Math.max(0, P - (M * k));
+    } else {
+      var pow = Math.pow(1 + r, k);
+      Bk = P * pow - M * ((pow - 1) / r);
+      if (Bk < 0) {
+        Bk = 0;
+      }
+    }
+
+    balances.push(Bk);
+  }
+
+  return { balances: balances };
+}

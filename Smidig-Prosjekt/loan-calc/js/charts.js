@@ -1,7 +1,7 @@
 /*
 ----------------------------------------------------------------------
 Tegner graf i steg 4: baseline + scenario (år-for-år)
-- Viser gjenstående lånesaldo over tid
+- Viser gjenstående lånesaldo over tid (restgjeld)
 - Baseline-linje vises alltid
 - Scenario-linje vises kun når bruker har gjort endring
 ----------------------------------------------------------------------
@@ -10,9 +10,22 @@ Tegner graf i steg 4: baseline + scenario (år-for-år)
 @param {{balances:number[]}} base_series
 @param {{balances:number[]}|null} scenario_series
 */
+
+/*
+------------------------------------------------------------
+DEL 1: Intern grafreferanse (Chart.js)
+------------------------------------------------------------
+*/
+var step4_chart = null;
+
 function render_step4_chart(base_input, base_series, scenario_series) {
-  var canvas = document.getElementById("step4Chart");
-  if (!canvas || !base_input || !base_series || !base_series.balances) {
+  /*
+  ------------------------------------------------------------
+  canvas-id step4_chart_canvas
+  ------------------------------------------------------------
+  */
+  var canvas = document.getElementById("step4_chart_canvas");
+  if (!canvas || typeof Chart === "undefined" || !base_input || !base_series || !base_series.balances) {
     return;
   }
 
@@ -26,19 +39,38 @@ function render_step4_chart(base_input, base_series, scenario_series) {
     return;
   }
 
+  /*
+  ----------------------
+  Labels: År 0..År N
+  ----------------------
+  */
   var labels = [];
   var i = 0;
   for (i = 0; i <= years; i += 1) {
     labels.push("År " + i);
   }
 
+  /*
+  ------------------------------------------------
+  Scenario: vis kun hvis lengden matcher baseline
+  ------------------------------------------------
+  */
   var show_scenario = false;
   var scenario_data = [];
-  if (scenario_series && scenario_series.balances && scenario_series.balances.length === base_series.balances.length) {
+  if (
+    scenario_series &&
+    scenario_series.balances &&
+    scenario_series.balances.length === base_series.balances.length
+  ) {
     show_scenario = true;
     scenario_data = scenario_series.balances;
   }
 
+  /*
+  ----------------------
+  Rebuild graf (robust)
+  ----------------------
+  */
   if (step4_chart !== null) {
     step4_chart.destroy();
     step4_chart = null;
@@ -50,13 +82,13 @@ function render_step4_chart(base_input, base_series, scenario_series) {
       labels: labels,
       datasets: [
         {
-          label: "Originalt lån",
+          label: "Originalt lån (restgjeld)",
           data: base_series.balances,
           tension: 0.25,
           pointRadius: 0
         },
         {
-          label: "Etter endring",
+          label: "Etter endring (restgjeld)",
           data: scenario_data,
           tension: 0.25,
           pointRadius: 0,
@@ -88,7 +120,7 @@ function render_step4_chart(base_input, base_series, scenario_series) {
           callbacks: {
             label: function (tooltip_item) {
               var value = tooltip_item.parsed.y || 0;
-              return tooltip_item.dataset.label + ": " + format_currency(value);
+              return tooltip_item.dataset.label + ": " + format_currency(value) + " kr";
             }
           }
         }

@@ -8,7 +8,7 @@ Ansvar:
 - Viser hvordan små endringer påvirker månedskostnad og renter
 - Holder slider og kr-input i sync
 - Holder rente-slider og rente-input i sync (0 i midten)
-- Oppdaterer linjediagrammet (Chart.js) uten å re-initialisere
+- Oppdaterer linjediagrammet (Chart.js)
 ============================================================
 */
 
@@ -37,88 +37,48 @@ let base_result = {
 
 /*
 ------------------------------------------------------------
-DEL 3: Graf (Chart.js) for steg 4
-- Initieres kun én gang, og oppdateres deretter
+DEL 2B: Serier for steg 4-grafen + brukerens nåværende endringer
 ------------------------------------------------------------
 */
-let step4_chart = null;
+let base_series = null;
 
-function format_kr_for_tooltip(value) {
-  return format_currency(value) + " kr";
-}
+let current_extra_equity = 0;
+let current_interest_change_pp = 0;
 
-function update_step4_chart(base_monthly, more_equity_monthly, interest_change_monthly) {
-  const canvas = document.getElementById("step4_chart_canvas");
-  if (!canvas || typeof Chart === "undefined") {
+/*
+------------------------------------------------------------
+DEL 3: Oppdater “ekte” lånegraf (restgjeld over tid)
+- Baseline vises alltid
+- Scenario viser kombinasjon av:
+  - ekstra egenkapital (reduserer lånebeløp)
+  - renteendring (+/- prosentpoeng)
+------------------------------------------------------------
+*/
+function update_step4_combined_chart() {
+  if (!base_series || base_years <= 0) {
     return;
   }
 
-  const context = canvas.getContext("2d");
+  const extra_equity = Math.max(0, Number(current_extra_equity) || 0);
+  const change_pp = Number(String(current_interest_change_pp || "").replace(",", "."));
+  const effective_change_pp = isNaN(change_pp) ? 0 : change_pp;
 
-  const labels = ["Standardlån", "Mer egenkapital", "Endret rente"];
-  const data_values = [
-    Number(base_monthly) || 0,
-    Number(more_equity_monthly) || 0,
-    Number(interest_change_monthly) || 0
-  ];
+  const adjusted_loan_amount = Math.max(0, base_loan_amount - extra_equity);
+  const new_rate = Math.max(0, base_interest_rate + effective_change_pp);
 
-  if (!step4_chart) {
-    step4_chart = new Chart(context, {
-      type: "line",
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            label: "Månedskostnad",
-            data: data_values,
-            tension: 0.25,
-            fill: false
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          },
-          tooltip: {
-            callbacks: {
-              label: function (ctx) {
-                const y = ctx.parsed.y;
-                return "Månedskostnad: " + format_kr_for_tooltip(y);
-              }
-            }
-          }
-        },
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: "Scenario"
-            }
-          },
-          y: {
-            beginAtZero: true,
-            title: {
-              display: true,
-              text: "Månedskostnad (kr)"
-            },
-            ticks: {
-              callback: function (value) {
-                return format_currency(value);
-              }
-            }
-          }
-        }
-      }
-    });
-  } else {
-    step4_chart.data.labels = labels;
-    step4_chart.data.datasets[0].data = data_values;
-    step4_chart.update();
+  const has_any_change = (extra_equity > 0) || (Math.abs(effective_change_pp) > 0);
+
+  let scenario_series = null;
+
+  if (has_any_change) {
+    scenario_series = build_balance_series(adjusted_loan_amount, new_rate, base_years);
   }
+
+  render_step4_chart(
+    { years: base_years },
+    base_series,
+    scenario_series
+  );
 }
 
 /*
@@ -228,11 +188,11 @@ function setup_more_equity_controls() {
 
     /*
     ----------------------
-    Oppdater grafen
+    Oppdater kombinert graf
     ----------------------
     */
-    const current_interest_change_monthly = get_interest_change_monthly_for_chart();
-    update_step4_chart(base_result.monthly, new_result.monthly, current_interest_change_monthly);
+    current_extra_equity = Number(extra_equity_amount) || 0;
+    update_step4_combined_chart();
   }
 
   function update_from_slider() {
@@ -240,7 +200,7 @@ function setup_more_equity_controls() {
       return;
     }
 
-    const percent = clamp_number(extra_equity_percent_range.value, 0, 30);
+    const percent = clamp_number(extra_equity_percent_range.value, 0, 100);
     set_percent_label(percent);
 
     /*
@@ -271,7 +231,7 @@ function setup_more_equity_controls() {
       percent = (extra_amount / base_equity) * 100;
     }
 
-    const clamped_percent = clamp_number(percent, 0, 30);
+    const clamped_percent = clamp_number(percent, 0, 100);
 
     if (extra_equity_percent_range) {
       extra_equity_percent_range.value = String(Math.round(clamped_percent));
@@ -317,20 +277,6 @@ DEL 6: Oppdatering av UI for scenario "Endre rente"
 - Slideren har 0 i midten
 ------------------------------------------------------------
 */
-function get_interest_change_monthly_for_chart() {
-  const interest_change_monthly_el = document.querySelector('[data-scenario="interest_change_monthly"]');
-  if (!interest_change_monthly_el) {
-    return base_result.monthly;
-  }
-
-  const parsed = Number(String(interest_change_monthly_el.textContent || "").replace(/\s/g, ""));
-  if (isNaN(parsed)) {
-    return base_result.monthly;
-  }
-
-  return parsed;
-}
-
 function setup_interest_change_controls() {
   const interest_change_input = document.getElementById("interest_change_input");
   const interest_change_range = document.getElementById("interest_change_range");
@@ -384,20 +330,11 @@ function setup_interest_change_controls() {
 
     /*
     ----------------------
-    Oppdater grafen
+    Oppdater kombinert graf
     ----------------------
     */
-    const more_equity_monthly_el = document.querySelector('[data-scenario="more_equity_monthly"]');
-    let more_equity_monthly = base_result.monthly;
-
-    if (more_equity_monthly_el) {
-      const parsed = Number(String(more_equity_monthly_el.textContent || "").replace(/\s/g, ""));
-      if (!isNaN(parsed)) {
-        more_equity_monthly = parsed;
-      }
-    }
-
-    update_step4_chart(base_result.monthly, more_equity_monthly, new_result.monthly);
+    current_interest_change_pp = value_pp;
+    update_step4_combined_chart();
   }
 
   function update_from_slider() {
@@ -497,10 +434,15 @@ function init_step4(loan_data) {
 
   /*
   ---------------------------------------------------------
-  Init grafen med basisverdier før vi regner på scenarier
+  Bygg baseline serie (restgjeld per år) og tegn grafen
   ---------------------------------------------------------
   */
-  update_step4_chart(base_result.monthly, base_result.monthly, base_result.monthly);
+  base_series = build_balance_series(base_loan_amount, base_interest_rate, base_years);
+
+  current_extra_equity = 0;
+  current_interest_change_pp = 0;
+
+  update_step4_combined_chart();
 
   setup_more_equity_controls();
   setup_interest_change_controls();
