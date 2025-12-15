@@ -1,16 +1,26 @@
-// Skift mellom login og register
-function showRegister() {
+
+
+//skifter mellom login og register
+function showRegister () {
     document.getElementById("loginForm").classList.remove("active");
     document.getElementById("registerForm").classList.add("active");
 }
 
-function showLogin() {
+function showLogin () {
     document.getElementById("registerForm").classList.remove("active");
     document.getElementById("loginForm").classList.add("active");
 }
 
-// Registrer bruker
-function register() {
+
+
+
+
+
+
+
+
+// Registrer bruker (DB via backend)
+async function register() {
     const username = document.getElementById("reg-username").value.trim();
     const password = document.getElementById("reg-password").value.trim();
 
@@ -19,44 +29,54 @@ function register() {
         return;
     }
 
-    // Sjekk om bruker finnes allerede
-    let users = JSON.parse(localStorage.getItem("users")) || [];
+    try {
+        const res = await fetch("http://127.0.0.1:3000/api/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+        });
 
-    const exists = users.find(u => u.username === username);
+        const data = await res.json();
 
-    if (exists) {
-        alert("Brukernavnet er allerede tatt.");
-        return;
+        if (!res.ok) {
+            alert(data.error || "Noe gikk galt.");
+            return;
+        }
+
+        alert("Bruker opprettet! Du kan nå logge inn.");
+        showLogin();
+    } catch (e) {
+        alert("Fikk ikke kontakt med serveren. Sjekk at backend kjører.");
     }
-
-    // Lagre bruker
-    users.push({
-        username: username,
-        password: password
-    });
-
-    localStorage.setItem("users", JSON.stringify(users));
-
-    alert("Bruker opprettet! Du kan nå logge inn.");
-    showLogin();
 }
 
-// Logg inn
-function login() {
+// Logg inn (DB via backend)
+async function login() {
     const username = document.getElementById("login-username").value.trim();
     const password = document.getElementById("login-password").value.trim();
 
-    let users = JSON.parse(localStorage.getItem("users")) || [];
-
-    const user = users.find(u => u.username === username && u.password === password);
-
-    if (!user) {
-        alert("Feil brukernavn eller passord.");
+    if (!username || !password) {
+        alert("Vennligst fyll inn alle felt.");
         return;
     }
 
-    alert("Logget inn som: " + username);
+    try {
+        const res = await fetch("http://127.0.0.1:3000/api/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+        });
 
-    // Her kan du sende brukeren til en ny side:
-    // window.location.href = "dashboard.html";
+        const data = await res.json();
+
+        if (!res.ok) {
+            alert(data.error || "Noe gikk galt.");
+            return;
+        }
+
+        alert("Logget inn som: " + username);
+        // window.location.href = "dashboard.html";
+    } catch (e) {
+        alert("Fikk ikke kontakt med serveren. Sjekk at backend kjører.");
+    }
 }
