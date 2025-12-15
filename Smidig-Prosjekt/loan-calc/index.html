@@ -10,21 +10,49 @@
 
 <body>
 
-  <main class="loan_page">
+  <nav>
+    <a href="../frontpage/front.html" class="logo-link">
+      <img src="../Infoside/images/logo.jpg" alt="UngØkonom Logo">
+    </a>
 
-    <!-- Felles header for ALLE steg -->
-    <header class="page_header">
+    <ul>
+      <li><a href="../frontpage/front.html">Hjem</a></li>
+      <li><a href="../Infoside/Info.html">Begreper</a></li>
+      <li><a href="../Infoside/Quiz.html">Quiz</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero loan_hero">
+    <div class="hero-inner">
       <h1>Lånekalkulator</h1>
-      <p>Stupid simple lånekalkulator som gir deg en rask og enkel oversikt over lånekostnadene dine.</p>
-
-      <!-- Enkel "stepper" som viser hvor langt du har kommet -->
-      <div class="stepper">
+      <p>En rask og enkel oversikt over lånekostnadene dine.</p>
+<!-- Glem denne foreløpig, tester en annen type indikator/meny
+      <div class="stepper" aria-label="Stegindikator">
         <div class="stepper_dot">1</div>
         <div class="stepper_dot">2</div>
         <div class="stepper_dot">3</div>
         <div class="stepper_dot">4</div>
       </div>
-    </header>
+    -->
+    </div>
+  </section>
+
+  <main class="loan_page">
+    <div class="loan_layout">
+
+      <!-- 
+      Ny meny som skal være på venstre siden av lånekalkulatoren,
+       i stedet for stepper dot som vi brukte tidligere rett over
+       -->
+
+       <aside class="step_menu">
+        <ul>
+          <li id="menu_step_1" class="step_menu_item step_menu_item_active">1. Velg lånetype</li>
+          <li id="menu_step_2" class="step_menu_item">2. Fyll inn tallene dine</li>
+          <li id="menu_step_3" class="step_menu_item">3. Oppsummering</li>
+          <li id="menu_step_4" class="step_menu_item">4. Scenarier</li>
+        </ul>
+       </aside>
 
     <!--
     ------------------------------
@@ -242,7 +270,7 @@
         <button id="btn_restart" class="btn_primary">Start på nytt</button>
       </div>
     </section>
-
+    </div>
   </main>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1"></script>

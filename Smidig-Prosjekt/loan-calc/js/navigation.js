@@ -18,7 +18,25 @@ Samspill med andre filer:
 
 /*
 ------------------------------------------------------------
-DEL 1: Hjelpefunksjon for å vise riktig steg
+DEL 1A: Oppdater steg-meny på venstre siden av lånekalkuilatoren
+------------------------------------------------------------
+*/
+function update_step_menu_active(step_number) {
+  const all_menu_items = document.querySelectorAll(".step_menu_item");
+
+  all_menu_items.forEach(function (menu_item) {
+    menu_item.classList.remove("step_menu_item_active");
+  });
+
+  const active_menu_item = document.getElementById("menu_step_" + step_number);
+  if (active_menu_item) {
+    active_menu_item.classList.add("step_menu_item_active");
+  }
+}
+
+/*
+------------------------------------------------------------
+DEL 1B: Hjelpefunksjon for å vise riktig steg
 ------------------------------------------------------------
 */
 function show_step(step_number) {
@@ -44,24 +62,30 @@ function show_step(step_number) {
   }
 
   /*
+  ----------------------
+  Oppdater venstre meny
+  ----------------------
+  */
+  update_step_menu_active(step_number);
+
+  /*
   ----------------------------
   Oppdater prikkene i stepper
+  Kommentert ut for å teste/bruke en annen meny
   ----------------------------
-  */
+
   const dots = document.querySelectorAll(".stepper_dot");
 
   dots.forEach(function (dot, index) {
-    /*
-    ------------------------------------------------------------
-    index starter på 0, så vi sammenligner med step_number - 1
-    ------------------------------------------------------------
-    */
+    // index starter på 0, så vi sammenligner med step_number - 1
     if (index === step_number - 1) {
       dot.classList.add("stepper_dot_active");
     } else {
       dot.classList.remove("stepper_dot_active");
     }
   });
+
+  */
 }
 
 /*
@@ -97,28 +121,27 @@ function setup_navigation() {
   }
 
   if (btn_next_3) {
-  btn_next_3.addEventListener("click", function () {
-    if (!current_loan) {
-      alert("Du må først fylle inn tallene i steg 2 og beregne lånet.");
-      return;
-    }
+    btn_next_3.addEventListener("click", function () {
+      if (!current_loan) {
+        alert("Du må først fylle inn tallene i steg 2 og beregne lånet.");
+        return;
+      }
 
-    show_step(4);
+      show_step(4);
 
-    if (!step4_initialized) {
-      requestAnimationFrame(function () {
-        init_step4({
-          loan_amount: current_loan.loan_amount,
-          interest_rate: current_loan.interest_rate,
-          years: current_loan.years,
-          equity: current_loan.equity
+      if (!step4_initialized) {
+        requestAnimationFrame(function () {
+          init_step4({
+            loan_amount: current_loan.loan_amount,
+            interest_rate: current_loan.interest_rate,
+            years: current_loan.years,
+            equity: current_loan.equity
+          });
+          step4_initialized = true;
         });
-        step4_initialized = true;
-      }); 
-    }
-  });
-}
-
+      }
+    });
+  }
 
   if (btn_restart) {
     btn_restart.addEventListener("click", function () {
@@ -134,34 +157,7 @@ DEL 3: Init når siden er ferdig lastet
 */
 document.addEventListener("DOMContentLoaded", function () {
   show_step(1);
-
-  /*
-  ----------------------
-  Start på steg 1
-  ----------------------
-  */
-
   setup_step1();
-
-  /*
-  ----------------------
-  Valg av lånetype (calculator.js)
-  ----------------------
-  */
-
   setup_step2();
-
-  /*
-  ----------------------
-  Skjemaet med tall (calculator.js)
-  ----------------------
-  */
-
   setup_navigation();
-
-  /*
-  ----------------------
-  Denne filen
-  ----------------------
-  */
 });
