@@ -211,5 +211,15 @@ header p {
     display: block;
 }
 
+.logo-link {
+    display: flex;
+    align-items: center;
+}
+.logo-link img {
+    width: 120px;
+    height: auto;
+    cursor: pointer;
+}
+
 
 
