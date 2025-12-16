@@ -100,10 +100,12 @@ app.post("/api/deactivateAccount", async (req, res) => {
       "SELECT password_hash FROM users WHERE username = $1", 
       [username]
     );
-    if(result.rowCount == 0) return res.status(404).send("Bruker ikke funnet.");
+    if(result.rowCount == 0) 
+      return res.status(404).send("Bruker ikke funnet.");
       
     const ok = await bcrypt.compare(password, result.rows[0].password_hash);
-      if(!ok) return res.status(401).send("Feil passord.");
+      if(!ok) 
+        return res.status(401).send("Feil passord.");
       
       await pool.query("UPDATE users SET active = false WHERE username = $1", [username]);
 
@@ -123,10 +125,12 @@ app.post("/api/deleteAccount", async (req, res) => {
       "SELECT password_hash FROM users WHERE username = $1", 
       [username]
     );
-    if(result.rowCount == 0) return res.status(404).send("Bruker ikke funnet.");
+    if(result.rowCount == 0) 
+      return res.status(404).send("Bruker ikke funnet.");
     
     const ok = await bcrypt.compare(password, result.rows[0].password_hash);
-      if(!ok) return res.status(401).send("Feil passord.");
+      if(!ok) 
+        return res.status(401).send("Feil passord.");
     
       await pool.query("DELETE FROM users WHERE username = $1", [username]);
 
@@ -134,5 +138,37 @@ app.post("/api/deleteAccount", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("Noe gikk galt på serveren.");
+  }
+});
+
+// Endre passord
+app.post("/api/changePassword", async (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+
+    const result = await pool.query(
+      "SELECT password_hash FROM users WHERE username = $1", 
+      [username]
+    );
+    if(result.rowCount == 0) {
+      return res.status(404).send("Bruker ikke funnet.");
+    }
+
+    const ok = await bcrypt.compare(password, result.rows[0].password_hash);
+      if(!ok) {
+        return res.status(401).send("Feil passord.");
+    }
+
+    const newHash = await bcrypt.hash(newPassword, 10);
+
+    await pool.query(
+      "UPDATE users SET password_hash = $1 WHERE username = $2", 
+      [newHash, username]
+    );
+
+    res.send("Passordet ditt er endret.");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Serverfeil.");
   }
 });
