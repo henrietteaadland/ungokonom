@@ -90,3 +90,49 @@ app.post("/api/login", async (req, res) => {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Backend kjører på http://localhost:${port}`));
+
+// Deaktiver brukerkonto
+app.post("/api/deactivateAccount", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    const result = await pool.query(
+      "SELECT password_hash FROM users WHERE username = $1", 
+      [username]
+    );
+    if(result.rowCount == 0) return res.status(404).send("Bruker ikke funnet.");
+      
+    const ok = await bcrypt.compare(password, result.rows[0].password_hash);
+      if(!ok) return res.status(401).send("Feil passord.");
+      
+      await pool.query("UPDATE users SET active = false WHERE username = $1", [username]);
+
+    res.send("Kontoen din er deaktivert.");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Noe gikk galt på serveren.");
+  }
+});
+
+// Slett brukerkonto
+app.post("/api/deleteAccount", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    const result = await pool.query(
+      "SELECT password_hash FROM users WHERE username = $1", 
+      [username]
+    );
+    if(result.rowCount == 0) return res.status(404).send("Bruker ikke funnet.");
+    
+    const ok = await bcrypt.compare(password, result.rows[0].password_hash);
+      if(!ok) return res.status(401).send("Feil passord.");
+    
+      await pool.query("DELETE FROM users WHERE username = $1", [username]);
+
+    res.send("Kontoen din er nå slettet permanent.");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Noe gikk galt på serveren.");
+  }
+});
