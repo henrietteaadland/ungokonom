@@ -1,62 +1,72 @@
-// Skift mellom login og register
-function showRegister() {
-    document.getElementById("loginForm").classList.remove("active");
-    document.getElementById("registerForm").classList.add("active");
-}
+// Hent elementer
+const loginForm = document.getElementById('loginForm');
+const registerForm = document.getElementById('registerForm');
+const formTitle = document.getElementById('formTitle');
+const showRegisterBtn = document.getElementById('showRegister');
+const showLoginBtn = document.getElementById('showLogin');
 
-function showLogin() {
-    document.getElementById("registerForm").classList.remove("active");
-    document.getElementById("loginForm").classList.add("active");
-}
+// 1. Bytt mellom Login og Registrering
+showRegisterBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  loginForm.style.display = 'none';
+  registerForm.style.display = 'block';
+  formTitle.innerText = 'Opprett ny konto';
+});
 
-// Registrer bruker
-function register() {
-    const username = document.getElementById("reg-username").value.trim();
-    const password = document.getElementById("reg-password").value.trim();
+showLoginBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  registerForm.style.display = 'none';
+  loginForm.style.display = 'block';
+  formTitle.innerText = 'Logg inn for å fortsette';
+});
 
-    if (!username || !password) {
-        alert("Vennligst fyll inn alle felt.");
-        return;
-    }
+// 2. Innlogging -> GÅR TIL FORSIDEN
+loginForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const btn = loginForm.querySelector('.login-btn');
+  const originalText = btn.innerText;
+  
+  btn.innerText = 'LOGGER INN...';
+  btn.style.backgroundColor = '#00C1A3';
+  
+  setTimeout(() => {
+    // SENDER DEG TIL HENRIETTES FORSIDE
+    window.location.href = 'Smidig-Prosjekt/frontpage/front.html';
+    
+  }, 1000);
+});
 
-    // Sjekk om bruker finnes allerede
-    let users = JSON.parse(localStorage.getItem("users")) || [];
+// 3. Registrering med Passord-sjekk
+registerForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const password = document.getElementById('regPassword').value;
+  const confirmPassword = document.getElementById('regConfirmPassword').value;
+  const errorMsg = document.getElementById('passError');
+  
+  errorMsg.style.display = 'none';
 
-    const exists = users.find(u => u.username === username);
+  if (password.length < 8 || !/[0-9]/.test(password) || !/[a-z]/.test(password) || !/[A-Z]/.test(password)) {
+    errorMsg.style.display = 'block';
+    errorMsg.innerText = 'Passordet må ha minst 8 tegn, tall, stor og liten bokstav.';
+    return;
+  }
+  
+  if (password !== confirmPassword) {
+    errorMsg.style.display = 'block';
+    errorMsg.innerText = 'Passordene er ikke like.';
+    return;
+  }
 
-    if (exists) {
-        alert("Brukernavnet er allerede tatt.");
-        return;
-    }
-
-    // Lagre bruker
-    users.push({
-        username: username,
-        password: password
-    });
-
-    localStorage.setItem("users", JSON.stringify(users));
-
-    alert("Bruker opprettet! Du kan nå logge inn.");
-    showLogin();
-}
-
-// Logg inn
-function login() {
-    const username = document.getElementById("login-username").value.trim();
-    const password = document.getElementById("login-password").value.trim();
-
-    let users = JSON.parse(localStorage.getItem("users")) || [];
-
-    const user = users.find(u => u.username === username && u.password === password);
-
-    if (!user) {
-        alert("Feil brukernavn eller passord.");
-        return;
-    }
-
-    alert("Logget inn som: " + username);
-
-    // Her kan du sende brukeren til en ny side:
-    // window.location.href = "dashboard.html";
-}
+  // Registrering OK
+  const btn = registerForm.querySelector('.login-btn');
+  btn.innerText = 'REGISTRERER...';
+  
+  setTimeout(() => {
+    alert('Konto opprettet!');
+    registerForm.style.display = 'none';
+    loginForm.style.display = 'block';
+    formTitle.innerText = 'Logg inn for å fortsette';
+    registerForm.reset();
+    btn.innerText = 'REGISTRER DEG';
+  }, 1000);
+});
