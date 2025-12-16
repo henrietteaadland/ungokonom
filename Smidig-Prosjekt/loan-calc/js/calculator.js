@@ -28,6 +28,28 @@ let current_loan = null;
 
 /*
 ------------------------------------------------------------
+DEL 1B: Vis/skjul bilkostnader basert på lånetype
+------------------------------------------------------------
+*/
+function update_car_sections_visibility() {
+  const car_costs_info = document.getElementById("car_costs_info");
+  const car_costs_section = document.getElementById("car_costs_section");
+
+  if (!car_costs_info || !car_costs_section) {
+    return;
+  }
+
+  if (selected_loan_type === "car") {
+    car_costs_info.style.display = "block";
+    car_costs_section.style.display = "block";
+  } else {
+    car_costs_info.style.display = "none";
+    car_costs_section.style.display = "none";
+  }
+}
+
+/*
+------------------------------------------------------------
 DEL 2: Steg 1 – velge lånetype
 ------------------------------------------------------------
 */
@@ -39,6 +61,16 @@ function setup_step1() {
   if (housing_card) {
     housing_card.addEventListener("click", function () {
       selected_loan_type = "housing";
+      update_step2_defaults_for_loan_type();
+
+
+      /*
+      ----------------------
+      Vis/skjul bilseksjoner basert på valgt lånetype
+      ----------------------
+
+      */
+      update_car_sections_visibility();
 
       /*
       ----------------------
@@ -56,13 +88,17 @@ function setup_step1() {
   if (car_card) {
     car_card.addEventListener("click", function () {
       selected_loan_type = "car";
+      update_step2_defaults_for_loan_type();
+
 
       /*
       ----------------------
-      Marker valgt kort
+      Vis/skjul bilseksjoner basert på valgt lånetype
       ----------------------
-
       */
+
+      update_car_sections_visibility();
+
       car_card.classList.add("selected");
       if (housing_card) {
         housing_card.classList.remove("selected");
@@ -76,21 +112,15 @@ function setup_step1() {
         alert("Velg først om du vil låne til bolig eller bil.");
         return;
       }
-
-      /*
-      ----------------------
-      Her går vi bare videre til steg 2 dersom lånetype er valgt
-      ----------------------
-
-      */
       show_step(2);
     });
   }
+  update_car_sections_visibility();
 }
 
 /*
 ------------------------------------------------------------
-DEL 3: Selve låneberegningen
+DEL 3: Låneberegningen
 ------------------------------------------------------------
 */
 function calculate_loan(loan_amount, interest_rate_percent, years) {
@@ -128,6 +158,35 @@ function calculate_loan(loan_amount, interest_rate_percent, years) {
     total_paid: total_paid,
     total_interest: total_interest
   };
+}
+
+/*
+------------------------------------------------------------
+Oppdatere price input ved valg av lånetype
+------------------------------------------------------------
+*/
+
+function update_step2_defaults_for_loan_type() {
+  const purchase = document.getElementById("purchase_price_input");
+  const equity = document.getElementById("equity_input");
+  const interest = document.getElementById("interest_input");
+  const years = document.getElementById("years_input");
+
+  if (!purchase || !equity || !interest || !years) return;
+
+  if (selected_loan_type === "car") {
+    purchase.placeholder = "300 000";
+    equity.placeholder = "50 000";
+    interest.placeholder = "9";
+    years.placeholder = "5";
+    years.max = "10";
+  } else {
+    purchase.placeholder = "3 000 000";
+    equity.placeholder = "300 000";
+    interest.placeholder = "5,2";
+    years.placeholder = "25";
+    years.max = "50";
+  }
 }
 
 /*
@@ -176,8 +235,8 @@ function setup_step2() {
     ----------------------------------
 
     */
-    if (isNaN(purchase_price) || purchase_price <= 10_000 || purchase_price > 50_000_000) {
-      alert("Kjøpesum må være mellom 10 000 kr og 50 000 000 kr.");
+    if (isNaN(purchase_price) || purchase_price <= 1 || purchase_price > 50_000_000) {
+      alert("Kjøpesum må være mellom 1 kr og 50 000 000 kr.");
       return;
     }
 
@@ -289,3 +348,5 @@ function update_step3() {
 
   update_step3_chart(loan_amount, result.total_interest);
 }
+
+

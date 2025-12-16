@@ -130,3 +130,67 @@ function render_step4_chart(base_input, base_series, scenario_series) {
     }
   });
 }
+
+/*
+------------------------------------------------------------
+Tegner graf i steg 5: Bilkostnader per måned
+- Doughnut: fordeling av kostnader
+------------------------------------------------------------
+*/
+
+var step5_car_chart = null;
+
+function render_car_costs_chart(breakdown) {
+  var canvas = document.getElementById("car_costs_chart_canvas");
+  if (!canvas || typeof Chart === "undefined" || !breakdown) {
+    return;
+  }
+
+  var ctx = canvas.getContext("2d");
+  if (!ctx) {
+    return;
+  }
+
+  if (step5_car_chart !== null) {
+    step5_car_chart.destroy();
+    step5_car_chart = null;
+  }
+
+  step5_car_chart = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      labels: [
+        "Verditap",
+        "Drivstoff / strøm",
+        "Forsikring",
+        "Vedlikehold"
+      ],
+      datasets: [
+        {
+          data: [
+            breakdown.depreciation,
+            breakdown.energy,
+            breakdown.insurance,
+            breakdown.maintenance
+          ]
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: "bottom"
+        },
+        tooltip: {
+          callbacks: {
+            label: function (ctx) {
+              return ctx.label + ": " + format_currency(ctx.parsed) + " kr / mnd";
+            }
+          }
+        }
+      }
+    }
+  });
+}

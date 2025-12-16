@@ -100,6 +100,9 @@ function setup_navigation() {
   const btn_back_3 = document.getElementById("btn_back_step_3");
   const btn_back_step_4 = document.getElementById("btn_back_step_4");
 
+  const btn_next_step_4 = document.getElementById("btn_next_step_4");
+  const btn_back_step_5 = document.getElementById("btn_back_step_5");
+
   const btn_restart = document.getElementById("btn_restart");
 
   if (btn_back_2) {
@@ -140,6 +143,18 @@ function setup_navigation() {
           step4_initialized = true;
         });
       }
+    });
+  }
+
+  if (btn_next_step_4) {
+    btn_next_step_4.addEventListener("click", function () {
+      show_step(5);
+    });
+  }
+
+  if (btn_back_step_5) {
+    btn_back_step_5.addEventListener("click", function () {
+      show_step(4);
     });
   }
 

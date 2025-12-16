@@ -42,8 +42,8 @@
 
       <!-- 
       Ny meny som skal være på venstre siden av lånekalkulatoren,
-       i stedet for stepper dot som vi brukte tidligere rett over
-       -->
+      i stedet for stepper dot som vi brukte tidligere rett over
+      -->
 
        <aside class="step_menu">
         <ul>
@@ -51,6 +51,7 @@
           <li id="menu_step_2" class="step_menu_item">2. Fyll inn tallene dine</li>
           <li id="menu_step_3" class="step_menu_item">3. Oppsummering</li>
           <li id="menu_step_4" class="step_menu_item">4. Scenarier</li>
+          <li id="menu_step_5" class="step_menu_item">5. Bilkostnader</li>
         </ul>
        </aside>
 
@@ -271,10 +272,170 @@
 
       <div class="step_actions">
         <button id="btn_back_step_4" class="btn_secondary">Tilbake</button>
-        <button id="btn_restart" class="btn_primary">Start på nytt</button>
+        <button id="btn_next_step_4" class="btn_primary">Neste</button>
       </div>
     </section>
+
+      <!--
+      -------------------------------- 
+      Steg 5: Bilkostander
+      --------------------------------
+      -->
+
+      <section id="step_5" class="step">
+      
+      <!--
+      ------------------------- 
+      Kostnader med å eie en bil
+      -------------------------
+      -->
+        <div id="car_costs_info" class="car_costs_info">
+          <h3>Hva koster det egentlig å eie en bil?</h3>
+          <p>
+            I tillegg til lånekostnadene kommer andre faste kostnader som drivstoff, forsikring, vedlikehold og
+            verditap på bilen. Disse kostnadene kan variere mye avhengig av biltype og bruksmønster.
+          </p>
+          <p>
+            Ifølge <a href="https://www.naf.no/bilhold/kostnader/hva-koster-det-a-eie-bil" target="_blank" rel="noopener">NAF</a>,
+            basert på beregninger fra Opplysningsrådet for veitrafikken (OFV),
+            kan det koste omtrent <strong>9 280 kr per måned</strong> å eie og bruke en ny elbil,
+            og omtrent <strong>10 858 kr per måned</strong> å eie og bruke en tilsvarende dieselbil,
+            når alle vanlige kostnader (verditap, lån, forsikring, drivstoff/strøm, vedlikehold osv.)
+            er med i regnestykket. Tallene vil variere med biltype, kjørelengde og andre forhold.
+          </p>
+
+
+          <p class="car_estimation_section">
+            Tallene under er en estimat basert på gjennomsnittetlige kostnader for ulike biltyper. De faktiske kostnadene kan variere og du er derfor oppfordret til å gjøre egne undersøkelser basert på din situasjon.
+            Juster dem gjerne for å se hvordan det påvirker totalen!
+          </p>
+        </div>
+
+      <div id="car_costs_section" class="car_costs_section">
+        <div class="summary_box">
+          <h3>Oppsummering</h3>
+
+          <p>
+            <strong>Totale bilkostnader per måned:</strong>
+            <span id="car_total_monthly">–</span> kr
+          </p>
+
+          <p class="step_footnote">
+            Totalt per år:
+            <strong><span id="car_total_yearly">–</span> kr</strong>
+          </p>
+        </div>
+
+        <div class="car_chart_box">
+          <canvas id="car_costs_chart_canvas"></canvas>
+        </div>
+
+        <div class="summary_box">
+          <h3 class="car_section_title">Estimert bilkostnader per måned</h3>
+          <p class="subtitle">
+            Basert på gjennomsnittlige kostnader for ulike biltyper i Norge. Juster tallene for å se hvordan det påvirker totalen.
+          </p>
+
+          <div class="input_grid car_input_grid">
+
+            <div class="grid_full_width">
+              <div class="car_type_row">
+
+                <label for="car_type_select">Biltype</label>
+                <select id="car_type_select">
+                  <option value="electric">Elbil</option>
+                  <option value="fossil">Fossilbil</option>
+                </select>
+              </div>
+            </div>
+
+              <div>
+                <label for="car_km_year">Antall km per år</label>
+                <input
+                  id="car_km_year"
+                  type="number"
+                  min="0"
+                  step="100"
+                  value="12000"/>
+              </div>
+
+              <div>
+                <label for="car_insurance_monthly">Forsikring (mnd)</label>
+                <input
+                  id="car_insurance_monthly"
+                  type="number"
+                  min="0"
+                  step="100"
+                  value="1200"/>
+              </div>
+
+              <div>
+                <label for="car_maintenance_monthly">Vedlikehold (mnd)</label>
+                <input
+                  id="car_maintenance_monthly"
+                  type="number"
+                  min="0"
+                  step="100"
+                  value="800"/>
+            </div>
+
+            <div>
+              <label for="car_depreciation">Verditap (mnd)</label>
+              <input
+                id="car_depreciation"
+                type="number"
+                min="0"
+                step="100"
+                value="1000"/>
+          </div>
+
+          <div id="car_fossil_consumption_wrap" class="car_fossil_wrap is_hidden">
+            <label for="car_fossil_consumption_input">Forbruk (liter per 100 km)</label>
+            <input
+              id="car_fossil_consumption_input"
+              type="number"
+              min="0"
+              step="0.1"
+              value="7.5"/>
+          </div>
+
+          <div id="car_fossil_price_wrap" class="car_fossil_wrap is_hidden">
+            <label for="car_fossil_price_input">Drivstoffpris (kr per liter)</label>
+            <input
+              id="car_fossil_price_input"
+              type="number"
+              min="0"
+              step="0.1"
+              value="22.0"/>
+          </div>
+
+          <div id="car_electric_consumption_wrap" class="car_electric_wrap is_hidden">
+            <label for="car_electric_consumption_input">Forbruk (kWh per 100 km)</label>
+            <input
+              id="car_electric_consumption_input"
+              type="number"
+              min="0"
+              step="0.1"
+              value="15.0"/>
+          </div>
+
+          <div id="car_electric_price_wrap" class="car_electric_wrap is_hidden">
+            <label for="car_electric_price_input">Strømpris (kr per kWh)</label>
+            <input
+              id="car_electric_price_input"
+              type="number"
+              min="0"
+              step="0.1"
+              value="1.5"/>
+          </div>
+        </div>
+
+      <div class="step_actions">
+        <button id="btn_back_step_5" class="btn_secondary">Tilbake</button>
+        <button id="btn_restart" class="btn_primary">Start på nytt</button>
+      </div>
     </div>
+    </section>
   </main>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1"></script>
@@ -283,6 +444,7 @@
     <script src="./js/calculator.js" defer></script>
     <script src="./js/scenarios.js" defer></script>
     <script src="./js/navigation.js" defer></script>
+    <script src="./js/car_costs.js" defer></script>
 
 </body>
 </html>
