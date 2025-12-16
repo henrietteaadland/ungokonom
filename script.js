@@ -1,82 +1,116 @@
+// Hent elementer
+const loginForm = document.getElementById('loginForm');
+const registerForm = document.getElementById('registerForm');
+const formTitle = document.getElementById('formTitle');
+const showRegisterBtn = document.getElementById('showRegister');
+const showLoginBtn = document.getElementById('showLogin');
 
+// Bytt mellom Login og Registrering
+showRegisterBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  loginForm.style.display = 'none';
+  registerForm.style.display = 'block';
+  formTitle.innerText = 'Opprett ny konto';
+});
 
-//skifter mellom login og register
-function showRegister () {
-    document.getElementById("loginForm").classList.remove("active");
-    document.getElementById("registerForm").classList.add("active");
-}
+showLoginBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  registerForm.style.display = 'none';
+  loginForm.style.display = 'block';
+  formTitle.innerText = 'Logg inn for å fortsette';
+});
 
-function showLogin () {
-    document.getElementById("registerForm").classList.remove("active");
-    document.getElementById("loginForm").classList.add("active");
-}
+// Innlogging (via backend) videresender til forsiden/landing page
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value.trim();
 
+  const btn = loginForm.querySelector('.login-btn');
+  const originalText = btn.innerText;
+  btn.innerText = 'LOGGER INN...';
 
+  try {
+    const res = await fetch("http://127.0.0.1:3000/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: email, password })
+    });
 
+    const data = await res.json();
 
-
-
-
-
-// Registrer bruker (DB via backend)
-async function register() {
-    const username = document.getElementById("reg-username").value.trim();
-    const password = document.getElementById("reg-password").value.trim();
-
-    if (!username || !password) {
-        alert("Vennligst fyll inn alle felt.");
-        return;
+    if (!res.ok) {
+      alert(data.error || "Feil e-post eller passord.");
+      btn.innerText = originalText;
+      return;
     }
 
-    try {
-        const res = await fetch("http://127.0.0.1:3000/api/register", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, password })
-        });
+    window.location.href = 'Smidig-Prosjekt/frontpage/front.html';
+  } catch (err) {
+    alert("Fikk ikke kontakt med serveren. Sjekk at backend kjører.");
+    btn.innerText = originalText;
+  }
+});
 
-        const data = await res.json();
+// Registreringen skjer gjennom backend + passordsjekk beholdes
+registerForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-        if (!res.ok) {
-            alert(data.error || "Noe gikk galt.");
-            return;
-        }
+  const name = document.getElementById('regName').value.trim(); // brukes ikke i DB ennå
+  const email = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPassword').value;
+  const confirmPassword = document.getElementById('regConfirmPassword').value;
+  const errorMsg = document.getElementById('passError');
 
-        alert("Bruker opprettet! Du kan nå logge inn.");
-        showLogin();
-    } catch (e) {
-        alert("Fikk ikke kontakt med serveren. Sjekk at backend kjører.");
+  errorMsg.style.display = 'none';
+
+  if (!name || !email) {
+    errorMsg.style.display = 'block';
+    errorMsg.innerText = 'Fyll inn navn og e-post.';
+    return;
+  }
+
+  if (password.length < 8 || !/[0-9]/.test(password) || !/[a-z]/.test(password) || !/[A-Z]/.test(password)) {
+    errorMsg.style.display = 'block';
+    errorMsg.innerText = 'Passordet må ha minst 8 tegn, tall, stor og liten bokstav.';
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    errorMsg.style.display = 'block';
+    errorMsg.innerText = 'Passordene er ikke like.';
+    return;
+  }
+
+  const btn = registerForm.querySelector('.login-btn');
+  const originalText = btn.innerText;
+  btn.innerText = 'REGISTRERER...';
+
+  try {
+    const res = await fetch("http://127.0.0.1:3000/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: email, password })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      errorMsg.style.display = 'block';
+      errorMsg.innerText = data.error || "Noe gikk galt.";
+      btn.innerText = originalText;
+      return;
     }
-}
 
-// Logg inn (DB via backend)
-async function login() {
-    const username = document.getElementById("login-username").value.trim();
-    const password = document.getElementById("login-password").value.trim();
-
-    if (!username || !password) {
-        alert("Vennligst fyll inn alle felt.");
-        return;
-    }
-
-    try {
-        const res = await fetch("http://127.0.0.1:3000/api/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, password })
-        });
-
-        const data = await res.json();
-
-        if (!res.ok) {
-            alert(data.error || "Noe gikk galt.");
-            return;
-        }
-
-        alert("Logget inn som: " + username);
-        // window.location.href = "dashboard.html";
-    } catch (e) {
-        alert("Fikk ikke kontakt med serveren. Sjekk at backend kjører.");
-    }
-}
+    alert('Konto opprettet!');
+    registerForm.style.display = 'none';
+    loginForm.style.display = 'block';
+    formTitle.innerText = 'Logg inn for å fortsette';
+    registerForm.reset();
+    btn.innerText = originalText;
+  } catch (err) {
+    alert("Fikk ikke kontakt med serveren. Har du sjekket om backend/docker kjører");
+    btn.innerText = originalText;
+  }
+});

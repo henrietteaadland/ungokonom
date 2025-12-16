@@ -3,41 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login / Register</title>
+    <title>Ung Økonom - Logg inn</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
+  <div class="left-panel"></div>
 
+  <div class="right-panel">
+    <div class="login-wrapper">
+      <div class="brand-title">Ung Økonom</div>
+      <h2 id="formTitle">Logg inn for å fortsette</h2>
 
-    <div id="loginForm" class="form active">
-        <h2>Logg inn</h2>
+      <form id="loginForm">
+        <div class="input-group">
+          <input type="email" id="loginEmail" placeholder="E-post" required>
+        </div>
+        <div class="input-group">
+          <input type="password" id="loginPassword" placeholder="Passord" required>
+        </div>
+        <div class="actions-row">
+          <label class="remember-me"><input type="checkbox"> Husk meg</label>
+          <a href="#" class="forgot-pass">Glemt passord?</a>
+        </div>
+        <button type="submit" class="login-btn">LOGG INN</button>
+        <div class="register-section">
+            Har du ikke konto? <a href="#" id="showRegister">Registrer deg her</a>
+        </div>
+      </form>
 
-        <input type="text" id="login-username" placeholder="Brukernavn" required>
-        <input type="password" id="login-password" placeholder="Passord" required>
+      <form id="registerForm" style="display: none;">
+        <div class="input-group"><input type="text" id="regName" placeholder="Fullt navn" required></div>
+        <div class="input-group"><input type="email" id="regEmail" placeholder="E-post" required></div>
+        <div class="input-group">
+             <input type="password" id="regPassword" placeholder="Passord" required>
+             <p id="passError" class="error-message"></p>
+        </div>
+        <div class="input-group"><input type="password" id="regConfirmPassword" placeholder="Bekreft passord" required></div>
+        <button type="submit" class="login-btn" style="background-color: #00C1A3;">REGISTRER DEG</button>
+        <div class="register-section">
+            Har du allerede konto? <a href="#" id="showLogin">Logg inn her</a>
+        </div>
+      </form>
 
-        <button onclick="login()">Logg inn</button>
-
-        <p>Har du ikke bruker?  
-            <a href="#" onclick="showRegister()">Registrer</a>
-        </p>
     </div>
-
-
-    <div id="registerForm" class="form">
-        <h2>Registrer bruker</h2>
-
-        <input type="text" id="reg-username" placeholder="Velg brukernavn" required>
-        <input type="password" id="reg-password" placeholder="Velg passord" required>
-
-        <button onclick="register()">Opprett bruker</button>
-
-        <p>Har du allerede bruker?
-            <a href="#" onclick="showLogin()">Logg inn</a>
-        </p>
-    </div>
-
+  </div>
 </div>
 
 <script src="script.js"></script>
