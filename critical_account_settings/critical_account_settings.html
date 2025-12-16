@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Kritiske konto-innstillinger</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <section>
+        <h2 id="criticalAccountSettings">Kritiske konto-innstillinger</h2>
+            <p>
+                Hvis du velger å <strong>deaktivere</strong> kontoen din, blir profilen din midlertidig gjemt. 
+                <br>
+                Når du er klar til å fortsette å spare, kan du enkelt logge inn igjen for å reaktivere kontoen din.   
+            </p>
+
+            <p>
+                Hvis du velger å <strong>slette</strong> kontoen din, vil alle dataene dine bli fjernet permanent.
+               
+            <p class="warning">Denne handlingen kan ikke reverseres!</p>
+            </p>
+        </section>
+
+    <form id="passwordForm">
+        <label for="password">Skriv inn passord for å fortsette:</label>
+        <input type="password" id="password" name="password" placeholder="Passord" required>
+
+    <div class="critical-actions">
+        <button type="submit" name="action" value="deactivate" id="deactivateButton">Deaktivere Konto</button>
+        <button type="submit" name="action" value="delete" id="deleteButton">Slette Konto</button>
+    </div>
+    </form>
+    <script src="script.js"></script>
+</body>
+</html>
