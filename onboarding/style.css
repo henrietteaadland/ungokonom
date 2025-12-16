@@ -1,22 +1,43 @@
 :root {
-  --accent:#6ee7b7;
-  --muted:#9aa4b2;
+  --accent:#ffffff;
+  --muted: #374151;
   --bg:#061626;
+  --page-bg: #f3f4f6;
+  --shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
   font-family: system-ui, sans-serif;
+  --brand-green: rgb(6, 82, 27);
 }
 
 body {
   margin:0;
   min-height:100vh;
   background:linear-gradient(180deg,#041025,#071428);
+  background: var(--page-bg);
   color:white;
   display:flex;
   align-items:center;
   justify-content:center;
 }
 
+h1, p {
+  text-align: center;
+  color: black;
+}
+
+p {
+  color: var(--muted);
+}
+
+.img1 {
+  width: 500px;
+  border-radius: 25px;
+  border: 1px solid var(--muted);
+}
+
 .wrap, .card {
   background:rgba(255,255,255,0.03);
+  background: #ffffff;
+  box-shadow: var(--shadow);
   padding:32px;
   border-radius:14px;
   width:100%;
@@ -24,7 +45,10 @@ body {
 }
 
 .feature-list {
-  display:grid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   gap:12px;
 }
 
@@ -54,7 +78,7 @@ body {
 .nav {
   display:flex;
   gap:12px;
-  justify-content:flex-end;
+  justify-content: center;
   margin-top:20px;
 }
 
@@ -66,12 +90,40 @@ button {
 }
 
 .primary {
-  background:var(--accent);
+  background:var(--brand-green);
   font-weight:700;
+  color: #ffffff;
 }
 
 .ghost {
-  background:transparent;
+  background: white;
+  color: black;
   border:1px solid rgba(255,255,255,0.2);
-  color:var(--muted);
+  font-weight: 600;
+}
+
+.logo-header {
+  position: fixed;
+  background: #010000;
+  width: 100%;
+  padding: 10px 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  top: 0px;
+  left: 0px;
+  z-index: 1000;
+}
+
+.logo {
+  height: auto;
+  width: 120px;
+  cursor: pointer;
+}
+
+/* Litt mindre logo på små skjermer */
+@media (max-width: 600px) {
+  .logo {
+    height: 36px;
+  }
 }

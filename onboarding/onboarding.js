@@ -17,6 +17,7 @@ function nextStep() {
   window.location.href = `onboard-${next}.html`;
 }
 
+
 function skip() {
   localStorage.setItem("onboard-completed", "true");
   window.location.href = "app.html";
