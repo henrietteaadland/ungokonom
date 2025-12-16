@@ -211,5 +211,102 @@ header p {
     display: block;
 }
 
+/* quiz del */
 
+.quiz-wrapper {
+    max-width: 980px;
+    margin: 32px auto 60px;
+    padding: 24px 32px 32px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e7eb;
+}
 
+.quiz-wrapper h2 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 1.4rem;
+}
+
+.quiz-intro {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    color: #4b5563;
+}
+
+.quiz-question {
+    margin-bottom: 24px;
+}
+
+.quiz-question-text {
+    margin: 4px 0 10px;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction:  column;
+    gap: 8px;
+}
+
+.quiz-options {
+    width: 100%;
+    text-align: left;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    background: #f9fafb;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.05s ease;
+}
+
+.quiz-options:hover {
+    transform: translateY(-1px);
+    border-color: #9ca3af;
+}
+
+.quiz-question.answered .quiz-option {
+    cursor: default;
+}
+
+/* RIKTIG ELLER FEIL */
+
+.quiz-option.correct {
+    background: #d1fae5;
+    border-color: #10b981;
+}
+
+.quiz-option.incorrect {
+    background: #fee2e2;
+    border-color: #ef4444;
+    color: #991b1b;
+}
+
+.quiz-holder {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+#quiz-score {
+    font-weight: 500;
+}
+
+#reset-quiz {
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: none;
+    background: #111827;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+#reset-quiz:hover {
+    opacity: 0.9;
+}
