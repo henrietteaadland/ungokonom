@@ -40,6 +40,15 @@ DEL 1B: Hjelpefunksjon for å vise riktig steg
 ------------------------------------------------------------
 */
 function show_step(step_number) {
+  var loan_type = selected_loan_type;
+  if (!loan_type && current_loan && current_loan.loan_type) {
+    loan_type = current_loan.loan_type;
+  }
+
+  if (step_number === 5 && loan_type !== "car") {
+    step_number = 4;
+  }
+
   /*
   ----------------------
   Skjul alle steg
@@ -68,6 +77,11 @@ function show_step(step_number) {
   */
   update_step_menu_active(step_number);
 
+  if (step_number === 4) {
+    update_step4_next_button();
+  }
+
+
   /*
   ----------------------------
   Oppdater prikkene i stepper
@@ -90,7 +104,52 @@ function show_step(step_number) {
 
 /*
 ------------------------------------------------------------
-DEL 2: Koble knapper til navigasjon
+DEL 2A: Koble knapper til navigasjon
+------------------------------------------------------------
+*/
+
+function update_step4_next_button() {
+  var old_btn = document.getElementById("btn_next_step_4");
+  if (!old_btn) {
+    return;
+  }
+
+
+var btn = old_btn.cloneNode(true);
+old_btn.parentNode.replaceChild(btn, old_btn);
+
+var loan_type = selected_loan_type;
+if (!loan_type && current_loan && current_loan.loan_type) {
+  loan_type = current_loan.loan_type;
+}
+
+if (selected_loan_type === "car") {
+  btn.textContent = "Neste";
+  btn.addEventListener("click", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    show_step(5);
+  });
+
+} else {
+  btn.textContent = "Start på nytt";
+  btn.addEventListener("click", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    selected_loan_type = null;
+    current_loan = null;
+    show_step(1);
+  });
+  }
+}
+
+
+
+
+
+/*
+------------------------------------------------------------
+DEL 2B: Koble knapper til navigasjon
 ------------------------------------------------------------
 */
 function setup_navigation() {
@@ -117,12 +176,6 @@ function setup_navigation() {
     });
   }
 
-  if (btn_back_step_4) {
-    btn_back_step_4.addEventListener("click", function () {
-      show_step(3);
-    });
-  }
-
   if (btn_next_3) {
     btn_next_3.addEventListener("click", function () {
       if (!current_loan) {
@@ -131,6 +184,7 @@ function setup_navigation() {
       }
 
       show_step(4);
+      update_step4_next_button();
 
       if (!step4_initialized) {
         requestAnimationFrame(function () {
@@ -143,12 +197,6 @@ function setup_navigation() {
           step4_initialized = true;
         });
       }
-    });
-  }
-
-  if (btn_next_step_4) {
-    btn_next_step_4.addEventListener("click", function () {
-      show_step(5);
     });
   }
 
