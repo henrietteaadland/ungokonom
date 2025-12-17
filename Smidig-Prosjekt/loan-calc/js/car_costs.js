@@ -111,6 +111,13 @@ function setup_car_costs() {
   }
 
   update_car_type_ui();
+  render_car_costs_summary();
+
+  var inputs = document.querySelectorAll("#step_5 input, #step_5 select");
+  inputs.forEach(function(el) {
+    el.addEventListener("input", render_car_costs_summary);
+    el.addEventListener("change", render_car_costs_summary);
+  });
 }
 
 document.addEventListener("DOMContentLoaded", setup_car_costs);
@@ -167,37 +174,48 @@ function calculate_car_costs_breakdown() {
 
 function render_car_costs_summary() {
   var monthly_el = get_el("car_total_monthly");
-  var yearly_el = get_el("car_total_yearly");
 
-  if (!monthly_el || !yearly_el) {
+  if (!monthly_el) {
     return;
   }
 
   var breakdown = calculate_car_costs_breakdown();
 
+  var depreciation_line = get_el("car_sum_depreciation");
+  var insurance_line = get_el("car_sum_insurance");
+  var maintenance_line = get_el("car_sum_maintenance");
+  var energy_line = get_el("car_sum_energy");
+
+  if (depreciation_line) depreciation_line.textContent = format_number(Math.round(breakdown.depreciation));
+  if (insurance_line) insurance_line.textContent = format_number(Math.round(breakdown.insurance));
+  if (maintenance_line) maintenance_line.textContent = format_number(Math.round(breakdown.maintenance));
+  if (energy_line) energy_line.textContent = format_number(Math.round(breakdown.energy));
+
   monthly_el.textContent = format_number(Math.round(breakdown.total));
-  yearly_el.textContent = format_number(Math.round(breakdown.total * 12));
+ 
+  var loan_monthly = 0;
+  if (current_loan && current_loan.result && typeof current_loan.result.monthly === "number") {
+    loan_monthly = current_loan.result.monthly;
+  }
+
+  var loan_line = get_el("car_sum_loan");
+  if (loan_line) loan_line.textContent = format_number(Math.round(loan_monthly));
+
+  var total_with_loan_monthly = breakdown.total + loan_monthly;
+
+  var total_with_loan_monthly_el = get_el("car_total_with_loan_monthly");
+  var total_with_loan_yearly_el = get_el("car_total_with_loan_yearly");
+
+  if (total_with_loan_monthly_el) {
+    total_with_loan_monthly_el.textContent = format_number(Math.round(total_with_loan_monthly));
+  }
+
+  if (total_with_loan_yearly_el) {
+    total_with_loan_yearly_el.textContent = format_number(Math.round(total_with_loan_monthly * 12));
+  }
 
   if (typeof render_car_costs_chart === "function") {
     render_car_costs_chart(breakdown);
   }
 }
 
-function setup_car_costs_summary_events() {
-  var section = get_el("car_costs_section");
-  if (!section) {
-    return;
-  }
-
-  var inputs = section.querySelectorAll("input, select");
-  var i = 0;
-
-  for (i = 0; i < inputs.length; i += 1) {
-    inputs[i].addEventListener("input", render_car_costs_summary);
-    inputs[i].addEventListener("change", render_car_costs_summary);
-  }
-
-  render_car_costs_summary();
-}
-
-document.addEventListener("DOMContentLoaded", setup_car_costs_summary_events);

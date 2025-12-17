@@ -16,6 +16,10 @@ Tegner graf i steg 4: baseline + scenario (år-for-år)
 DEL 1: Intern grafreferanse (Chart.js)
 ------------------------------------------------------------
 */
+if (typeof Chart !== "undefined" && typeof ChartDataLabels !== "undefined") {
+  Chart.register(ChartDataLabels);
+}
+
 var step4_chart = null;
 
 function render_step4_chart(base_input, base_series, scenario_series) {
@@ -136,6 +140,16 @@ function render_step4_chart(base_input, base_series, scenario_series) {
               return tooltip_item.dataset.label + ": " + format_currency(value) + " kr";
             }
           }
+        },
+        datalabels: {
+          formatter: function (value, context) {
+            var data = context.chart.data.datasets[0].data;
+            var total = data.reduce(function (a, b) { return a + b; }, 0);
+            var pct = total ? (value / total) * 100 : 0;
+            return Math.round(pct) + "%\n" + format_currency(Math.round(value)) + " kr";
+          },
+          anchor: "end",
+          align: "end"
         }
       }
     }
@@ -168,40 +182,52 @@ function render_car_costs_chart(breakdown) {
   }
 
   step5_car_chart = new Chart(ctx, {
-    type: "doughnut",
-    data: {
-      labels: [
-        "Verditap",
-        "Drivstoff / strøm",
-        "Forsikring",
-        "Vedlikehold"
-      ],
-      datasets: [
-        {
-          data: [
-            breakdown.depreciation,
-            breakdown.energy,
-            breakdown.insurance,
-            breakdown.maintenance
-          ]
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: "bottom"
-        },
-        tooltip: {
-          callbacks: {
-            label: function (ctx) {
-              return ctx.label + ": " + format_currency(ctx.parsed) + " kr / mnd";
-            }
+  type: "doughnut",
+  data: {
+    labels: [
+      "Verditap",
+      "Drivstoff / strøm",
+      "Forsikring",
+      "Vedlikehold"
+    ],
+    datasets: [
+      {
+        data: [
+          breakdown.depreciation,
+          breakdown.energy,
+          breakdown.insurance,
+          breakdown.maintenance
+        ]
+      }
+    ]
+  },
+  plugins: [ChartDataLabels],
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "bottom"
+      },
+      tooltip: {
+        callbacks: {
+          label: function (ctx) {
+            return ctx.label + ": " + format_currency(ctx.parsed) + " kr / mnd";
           }
         }
+      },
+      datalabels: {
+        formatter: function (value, context) {
+          var data = context.chart.data.datasets[0].data;
+          var total = data.reduce(function (a, b) { return a + b; }, 0);
+          var pct = total ? (value / total) * 100 : 0;
+
+          return Math.round(pct) + "%\n" + format_currency(Math.round(value)) + " kr";
+        },
+        anchor: "end",
+        align: "end"
       }
     }
-  });
+  }
+});
 }
