@@ -46,7 +46,7 @@ loginForm.addEventListener('submit', async (e) => {
       return;
     }
 
-    window.location.href = 'Smidig-Prosjekt/frontpage/front.html';
+    window.location.href = '../frontpage/front.html';
   } catch (err) {
     alert("Fikk ikke kontakt med serveren. Sjekk at backend kjører.");
     btn.innerText = originalText;
