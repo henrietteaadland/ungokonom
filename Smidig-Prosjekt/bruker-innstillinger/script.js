@@ -1,3 +1,11 @@
+const API = "http://127.0.0.1:3000";
+
+const username = localStorage.getItem("username");
+if (!username) {
+    alert("Du er ikke logget inn.");
+    window.location.href = "../Login/login.html";
+}
+
 // --- NAVIGASJON I INNSTILLINGER ---
 const menuButtons = document.querySelectorAll(".sidebar .menu-btn:not(.danger-link)");
 const pages = document.querySelectorAll(".page");
@@ -17,8 +25,9 @@ const logoutButtons = document.querySelectorAll(".logout-everywhere");
 logoutButtons.forEach(btn => {
     btn.addEventListener("click", () => {
         if (confirm("Er du sikker på at du vil logge ut av alle enheter?")) {
-            window.location.href = "login.html";
-        }
+    localStorage.removeItem("username");
+    window.location.href = "../Login/login.html";
+    }
     });
 });
 
@@ -55,17 +64,17 @@ if(deactivateButton) {
 
         if(confirm("Er du sikker på at du vil deaktivere kontoen din?")) {
             try {
-                const res = await fetch("/api/deactivateAccount", { 
-                    method: "POST", 
-                    headers: {"Content-Type": "application/json" }, 
-                    body: JSON.stringify({ password }) 
-                });
-                
+                const res = await fetch(`${API}/api/deactivateAccount`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password })
+                    });
                 if (res.ok) {
                     alert(await res.text());
-                    window.location.href = "login.html";
+                    localStorage.removeItem("username");
+                    window.location.href = "../Login/login.html";
                 } else {
-                    alert("Kunne ikke deaktivere konto. Sjekk passordet.");
+                alert("Kunne ikke deaktivere konto. Sjekk passordet.");
                 }
             } catch (error) {
                 console.error("Feil under deaktivering:", error);
@@ -87,17 +96,17 @@ if(deleteButton) {
 
         if(confirm("Er du sikker på at du vil permanent slette kontoen din?")) {
             try {
-                const res = await fetch("/api/deleteAccount", { 
-                    method: "POST", 
-                    headers: {"Content-Type": "application/json" }, 
-                    body: JSON.stringify({ password }) 
+                const res = await fetch(`${API}/api/deleteAccount`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password })
                 });
-
                 if (res.ok) {
-                    alert(await res.text());
-                    window.location.href = "login.html";
+                alert(await res.text());
+                localStorage.removeItem("username");
+                window.location.href = "../Login/login.html";
                 } else {
-                    alert("Kunne ikke slette konto. Sjekk passordet.");
+                alert("Kunne ikke slette konto. Sjekk passordet.");
                 }
             } catch (error) {
                 console.error("Feil under sletting:", error);

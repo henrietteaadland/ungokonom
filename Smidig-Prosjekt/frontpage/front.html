@@ -5,7 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UngØkonom</title>
     <link rel="stylesheet" href="front.css">
+
+
+    <!-- Hindrer muligheten for at noen kan scippe over login funksjonen -->
+    <script>
+    if (!localStorage.getItem("username")) {
+        window.location.href = "../Login/login.html"
+    }
+    </script>
+
 </head>
+
+
 
 <body>
     <nav>
@@ -17,6 +28,7 @@
             <li><a href="./front.html">Hjem</a></li>
             <li><a href="../Infoside/Info.html">Begreper</a></li>
             <li><a href="../Infoside/Quiz.html">Quiz</a></li>
+            <li><a href="../bruker-innstillinger/index.html">Innstillinger</a></li>
         </ul>
     </nav>
 
