@@ -1,163 +1,108 @@
-/* Custom CSS Variables for Brand Colors */
-:root {
-    --brand-blue: #4d81af; /* Primary Brand Blue */
-    --brand-blue-dark: #3a6d96; /* Slightly darker shade for interaction/hover */
-    --brand-blue-light: #6296c6; /* Slightly lighter shade for a subtle hover effect */
-    --brand-light-gray: #f2f5f7; /* Used for content area background/inputs */
-    --text-color-dark: #333; /* Dark text for readability on light areas */
-    --text-color-light: white; /* Light text for readability on dark areas */
-    --danger-color: #c44;
+// --- NAVIGASJON I INNSTILLINGER ---
+const menuButtons = document.querySelectorAll(".sidebar .menu-btn:not(.danger-link)");
+const pages = document.querySelectorAll(".page");
+
+menuButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        const pageId = btn.getAttribute("data-page");
+        if(pageId) {
+            pages.forEach(p => p.classList.remove("active"));
+            document.getElementById(pageId).classList.add("active");
+        }
+    });
+});
+
+// --- LOGG UT ---
+const logoutButtons = document.querySelectorAll(".logout-everywhere");
+logoutButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        if (confirm("Er du sikker på at du vil logge ut av alle enheter?")) {
+            window.location.href = "login.html";
+        }
+    });
+});
+
+// --- NAVIGASJON MELLOM SIDENE ---
+const settingsView = document.getElementById('settings-view');
+const criticalView = document.getElementById('critical-view');
+const goToCriticalBtn = document.getElementById('goToCriticalBtn');
+const goBackBtn = document.getElementById('goBackBtn');
+
+goToCriticalBtn.addEventListener('click', () => {
+    settingsView.style.display = 'none';
+    criticalView.style.display = 'flex';
+});
+
+goBackBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    criticalView.style.display = 'none';
+    settingsView.style.display = 'flex';
+});
+
+// --- KRITISKE VALG (BACKEND INTEGRASJON) ---
+const deactivateButton = document.getElementById("deactivateButton");
+const deleteButton = document.getElementById("deleteButton");
+
+if(deactivateButton) {
+    deactivateButton.addEventListener("click", async (event) => {
+        event.preventDefault();
+        const password = document.getElementById("password").value;
+
+        if(!password) {
+            alert("Du må skrive inn passord!");
+            return;
+        }
+
+        if(confirm("Er du sikker på at du vil deaktivere kontoen din?")) {
+            try {
+                const res = await fetch("/api/deactivateAccount", { 
+                    method: "POST", 
+                    headers: {"Content-Type": "application/json" }, 
+                    body: JSON.stringify({ password }) 
+                });
+                
+                if (res.ok) {
+                    alert(await res.text());
+                    window.location.href = "login.html";
+                } else {
+                    alert("Kunne ikke deaktivere konto. Sjekk passordet.");
+                }
+            } catch (error) {
+                console.error("Feil under deaktivering:", error);
+                alert("Noe gikk galt. Prøv igjen senere.");
+            }
+        }
+    });
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    display: flex;
-    background-color: white;
-    color: var(--text-color-dark);
-    min-height: 100vh;
-}
+if(deleteButton) {
+    deleteButton.addEventListener("click", async (event) => {
+        event.preventDefault();
+        const password = document.getElementById("password").value;
 
-/* DARK MODE */
-.dark-mode {
-    background-color: #222;
-    color: var(--text-color-light);
-}
+        if(!password) {
+            alert("Du må skrive inn passord!");
+            return;
+        }
 
-.container {
-    display: flex;
-    width: 100%;
-}
+        if(confirm("Er du sikker på at du vil permanent slette kontoen din?")) {
+            try {
+                const res = await fetch("/api/deleteAccount", { 
+                    method: "POST", 
+                    headers: {"Content-Type": "application/json" }, 
+                    body: JSON.stringify({ password }) 
+                });
 
-/* --- SIDEBAR STYLING: Solid Dark Blue Background --- */
-.sidebar {
-    width: 280px;
-    /* Use the solid brand blue as the background */
-    background: var(--brand-blue);
-    padding: 20px;
-    height: auto;
-    min-height: 100vh;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.sidebar h2 {
-    margin-bottom: 25px;
-    /* White text for contrast on the dark background */
-    color: var(--text-color-light); 
-}
-
-/* --- MENU BUTTON STYLING: White Text on Dark Background --- */
-.menu-btn {
-    width: 100%;
-    padding: 12px 15px;
-    margin-bottom: 10px;
-    border: none;
-    /* Use transparent background so the sidebar color shows */
-    background: transparent;
-    /* White text */
-    color: var(--text-color-light); 
-    cursor: pointer;
-    border-radius: 6px;
-    font-size: 16px;
-    text-align: left;
-    transition: background 0.2s, color 0.2s;
-}
-
-/* Visually indicate the active/selected button */
-.menu-btn.active-menu,
-.menu-btn:hover {
-    /* Use a slightly darker blue or light shade for hover/active */
-    background: var(--brand-blue-dark); 
-    color: var(--text-color-light);
-    font-weight: bold;
-    /* Remove box shadow to keep it clean */
-    box-shadow: none; 
-}
-
-.content {
-    flex: 1;
-    padding: 40px;
-}
-
-.page {
-    display: none;
-}
-
-.page.active {
-    display: block;
-}
-
-.page h1 {
-    /* Headings in the content area still use the brand color */
-    color: var(--brand-blue);
-}
-
-.page p {
-    max-width: 750px;
-    line-height: 1.6;
-    font-size: 16px;
-}
-
-/* --- INPUTS & SELECT STYLING --- */
-input[type="password"],
-select {
-    width: 100%;
-    max-width: 400px;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 16px;
-    box-sizing: border-box;
-}
-
-/* --- BUTTON STYLING (General) --- */
-.save-btn,
-#light,
-#dark {
-    margin-top: 15px;
-    padding: 12px 24px;
-    border: none;
-    cursor: pointer;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background 0.2s;
-}
-
-/* Primary Action Button */
-.save-btn,
-.logout-everywhere {
-    background: var(--brand-blue);
-    color: white;
-}
-
-.save-btn:hover {
-    background: var(--brand-blue-dark);
-}
-
-/* Secondary Button for Tema (Light/Dark) */
-#light, #dark {
-    /* Making these buttons match the primary style better for consistency */
-    background: var(--brand-blue);
-    color: white;
-    margin-right: 10px;
-}
-
-#light:hover, #dark:hover {
-    background: var(--brand-blue-dark);
-    box-shadow: none;
-}
-
-.danger {
-    background: var(--danger-color);
-    color: white;
-    padding: 12px 24px;
-    border: none;
-    cursor: pointer;
-    border-radius: 6px;
-}
-
-.danger:hover {
-    background: #a33;
+                if (res.ok) {
+                    alert(await res.text());
+                    window.location.href = "login.html";
+                } else {
+                    alert("Kunne ikke slette konto. Sjekk passordet.");
+                }
+            } catch (error) {
+                console.error("Feil under sletting:", error);
+                alert("Noe gikk galt. Prøv igjen senere.");
+            }
+        }
+    });
 }
