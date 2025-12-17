@@ -142,14 +142,7 @@ function render_step4_chart(base_input, base_series, scenario_series) {
           }
         },
         datalabels: {
-          formatter: function (value, context) {
-            var data = context.chart.data.datasets[0].data;
-            var total = data.reduce(function (a, b) { return a + b; }, 0);
-            var pct = total ? (value / total) * 100 : 0;
-            return Math.round(pct) + "%\n" + format_currency(Math.round(value)) + " kr";
-          },
-          anchor: "end",
-          align: "end"
+          display: false
         }
       }
     }
