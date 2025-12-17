@@ -17,7 +17,7 @@ showLoginBtn.addEventListener('click', (e) => {
   e.preventDefault();
   registerForm.style.display = 'none';
   loginForm.style.display = 'block';
-  formTitle.innerText = 'Logg inn for å fortsetFte';
+  formTitle.innerText = 'Logg inn for å fortsette';
 });
 
 // Innlogging (via backend) videresender til forsiden/landing page
@@ -45,6 +45,9 @@ loginForm.addEventListener('submit', async (e) => {
       btn.innerText = originalText;
       return;
     }
+    // Lagrer hvem som er innlogget, for å kune ta i bruk bruker-innstillinger
+    localStorage.setItem("username", email);
+    window.location.href = '../frontpage/front.html';
 
     window.location.href = '../frontpage/front.html';
   } catch (err) {
@@ -52,6 +55,8 @@ loginForm.addEventListener('submit', async (e) => {
     btn.innerText = originalText;
   }
 });
+
+
 
 // Registreringen skjer gjennom backend + passordsjekk beholdes
 registerForm.addEventListener('submit', async (e) => {

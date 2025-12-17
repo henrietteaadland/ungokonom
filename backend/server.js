@@ -144,25 +144,30 @@ app.post("/api/deleteAccount", async (req, res) => {
 // Endre passord
 app.post("/api/changePassword", async (req, res) => {
   try {
-    const { oldPassword, newPassword } = req.body;
+    const { username, oldPassword, newPassword } = req.body;
+
+    if (!username || !oldPassword || !newPassword) {
+      return res.status(400).send("Mangler felter.");
+    }
 
     const result = await pool.query(
-      "SELECT password_hash FROM users WHERE username = $1", 
+      "SELECT password_hash FROM users WHERE username = $1",
       [username]
     );
-    if(result.rowCount == 0) {
+
+    if (result.rowCount === 0) {
       return res.status(404).send("Bruker ikke funnet.");
     }
 
-    const ok = await bcrypt.compare(password, result.rows[0].password_hash);
-      if(!ok) {
-        return res.status(401).send("Feil passord.");
+    const ok = await bcrypt.compare(oldPassword, result.rows[0].password_hash);
+    if (!ok) {
+      return res.status(401).send("Feil passord.");
     }
 
     const newHash = await bcrypt.hash(newPassword, 10);
 
     await pool.query(
-      "UPDATE users SET password_hash = $1 WHERE username = $2", 
+      "UPDATE users SET password_hash = $1 WHERE username = $2",
       [newHash, username]
     );
 
@@ -172,3 +177,4 @@ app.post("/api/changePassword", async (req, res) => {
     res.status(500).send("Serverfeil.");
   }
 });
+
