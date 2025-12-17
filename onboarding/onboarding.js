@@ -27,13 +27,5 @@ function finish() {
   if (save) localStorage.setItem("prefs", "true");
 
   localStorage.setItem("onboard-completed", "true");
-  window.location.href = "app.html";
+  window.location.href = "../login.html";
 }
-
-/*
-<script>
-if (localStorage.getItem("onboard-completed")) {
-  console.log("Onboarding fullført");
-}
-</script>
-*/

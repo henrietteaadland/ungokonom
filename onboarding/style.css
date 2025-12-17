@@ -29,7 +29,8 @@ p {
 }
 
 .img1 {
-  width: 500px;
+  width: auto;
+  max-height: 300px;
   border-radius: 25px;
   border: 1px solid var(--muted);
 }
