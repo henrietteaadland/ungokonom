@@ -180,21 +180,24 @@ header p {
     overflow: hidden;
 }
 
+/* Åpne/lukke*/
 .bare-header {
-    width: 100%;
+    width: 100%; /*fyller ut bredden*/
     border: none;
-    background: transparent;
+    background: transparent; 
     padding: 12px 16px;
-    text-align: left;
+    text-align: left; /* Tekst justert mot*/
     font-weight: 500;
-    font-size: 0.98rem;
+    font-size: 0.98rem; 
     display: flex;
-    align-items: center;
+    align-items: center; /* tekst og pil på samme linje*/
     justify-content: space-between;
     cursor: pointer;
     color: #0f172a;
 }
+/* Åpne/lukke*/
 
+/*Gjør at pilen er animert opp og ned*/
 .bare-header span.icon {
     font-size: 1rem;
     transition: transform 0.2s ease;
@@ -203,9 +206,11 @@ header p {
 .bare-item.open .bare-header .icon {
     transform: rotate(180deg);
 }
+/*Gjør at pilen er animert opp og ned*/
+
 
 .header-innhold {
-    display: none;
+    display: none; /*Displayer ikke innholdet før man trykker*/
     padding: 10px 16px 12px;
     font-size: 0.9rem;
     border-top: 1px solid #e5e7eb;
@@ -229,11 +234,14 @@ header p {
     border: 1px solid #e5e7eb;
 }
 
+/* Overskrift for quiz del*/
 .quiz-wrapper h2 {
     margin-top: 0;
     margin-bottom: 8px;
     font-size: 1.4rem;
 }
+/* Overskrift for quiz del*/
+
 
 .quiz-intro {
     margin-top: 0;
@@ -242,6 +250,7 @@ header p {
     color: #4b5563;
 }
 
+/* et sprøsmpl*/
 .quiz-question {
     margin-bottom: 24px;
 }
@@ -250,11 +259,13 @@ header p {
     margin: 4px 0 10px;
 }
 
+/*container for alternativene til spørsmålene*/
 .quiz-options {
     display: flex;
     flex-direction:  column;
     gap: 8px;
 }
+/*container for alternativene til spørsmålene*/
 
 .quiz-options {
     width: 100%;
@@ -278,17 +289,17 @@ header p {
 }
 
 /* RIKTIG ELLER FEIL */
-
 .quiz-option.correct {
     background: #d1fae5;
-    border-color: #10b981;
+    border-color: #10b981; /*Riktig fagre*/
 }
 
 .quiz-option.incorrect {
     background: #fee2e2;
-    border-color: #ef4444;
+    border-color: #ef4444; /*feil farge*/
     color: #991b1b;
 }
+/* RIKTIG ELLER FEIL */
 
 .quiz-holder {
     margin-top: 24px;
