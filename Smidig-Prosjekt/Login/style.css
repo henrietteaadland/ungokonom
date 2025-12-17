@@ -20,15 +20,15 @@ body, html { height: 100%; width: 100%; }
 
 .left-panel {
   flex: 1;
-  /* DITT VALGTE BILDE (Funker overalt) */
-  background-image: url('https://plus.unsplash.com/premium_photo-1679524520930-b810f59924b3?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  /* BRUKER DET EKTE BILDET I PROSJEKTET */
+  background-image: url('Smidig-Prosjekt/Infoside/images/Penger.jpg');
   background-size: cover;
   background-position: center;
   position: relative;
 }
 .left-panel::after {
   content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 75, 141, 0.1); /* Svakt blått filter over bildet */
+  background: rgba(0, 75, 141, 0.1);
 }
 
 .right-panel {
