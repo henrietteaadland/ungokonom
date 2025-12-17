@@ -4,10 +4,10 @@
 
 
 nav {
-    background: #010000;
-    width: 100%;
+    background: #010000; /* svart bakgrunn */
+    width: 100%; 
     padding: 5px 5%;
-    display: flex;
+    display: flex; /* for å plasere på linje */
     align-items: center;
     justify-content: space-between;
     position: relative;
@@ -35,11 +35,11 @@ nav {
 nav ul {
     width: 100%;
     text-align: center;
-    text-align: right;
+    text-align: right; /* tekst mot høyre */
 }
 
 nav ul li {
-    display: inline-block;
+    display: inline-block; 
     list-style: none;
     margin: 10px;
 }
@@ -56,6 +56,7 @@ body {
 }
 
 
+/* gradient av bildet*/
 .hero {
     background: 
     linear-gradient(
@@ -66,12 +67,10 @@ body {
         rgba(247, 234, 234, 0.0) 100%
     ),
     url("images/Penger.jpg");
+/* gradient av bildet*/
 
-
-    background-size: cover;
-    background-position: right center;
-    background-repeat: no-repeat;
-
+    background-size: cover; /*bildet fyller*/
+    background-position: right center; /*Bildet fokus mot høyre*/
     padding: clamp(40px, 6vw, 80px) 1%; /* ENDRE % verdien for å flytte nøkkekonsept teksten på toppen og den innhold */
 }
 
@@ -79,17 +78,20 @@ body {
     max-width: 900px;
 }
 
+/*hovedoverskrift*/
 .hero h1 {
     font-size: clamp(2rem, 4vw, 3.2rem);
     line-height: 1;
     margin: 0 0 22px;
 }
+/*hovedoverskrift*/
 
 .hero p {
     font-size: 1.05rem;
     max-width: 520ch;
 }
 
+/*Forfatter(meg) og dato*/
 .hero-meta {
     display: flex;
     gap: 10px;
@@ -97,10 +99,9 @@ body {
     font-size: 0.95rem;
     opacity: 0.85;
 }
+/*Forfatter(meg) og dato*/
 
-.hero-meta .dot {
-    opacity: 0.6;
-}
+
 
 .wrapper {
     max-width: 8000px;
@@ -122,7 +123,7 @@ header p {
 .card {
     margin-top: 22px;
     background: #fffefe;
-    border-radius: 16px; /*Border radius til siden med innhold*/
+    border-radius: 16px; /*Border radius til siden med innhold, runde hjørner*/
     padding: 14px 14px 18px;
     box-shadow: 0 14px 30px rgba( 0, 0, 0, 0.08); /*BARE EN FLEX, KUNNE SKREVET SIMPELT*/
     border: 1px solid #e5e7eb;
@@ -153,18 +154,23 @@ header p {
     margin-bottom: 32px;
 }
 
+/*Stor bokstav til venstre*/
 .bokstav-lapp {
     font-size: 2.4rem;
     font-weight: 600;
     color: rgb(6, 82, 27);
     padding-top: 6px;
 }
+/*Stor bokstav til venstre*/
 
+/*liste til høre for bokstaver med innhold*/
 .bokstav-item {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 12px; /*Avstand mellom hver begrep*/
 }
+/*liste til høre for bokstaver med innhold*/
+
 
 .bare-item {
     border-radius: 12px;
@@ -174,21 +180,24 @@ header p {
     overflow: hidden;
 }
 
+/* Åpne/lukke*/
 .bare-header {
-    width: 100%;
+    width: 100%; /*fyller ut bredden*/
     border: none;
-    background: transparent;
+    background: transparent; 
     padding: 12px 16px;
-    text-align: left;
+    text-align: left; /* Tekst justert mot*/
     font-weight: 500;
-    font-size: 0.98rem;
+    font-size: 0.98rem; 
     display: flex;
-    align-items: center;
+    align-items: center; /* tekst og pil på samme linje*/
     justify-content: space-between;
     cursor: pointer;
     color: #0f172a;
 }
+/* Åpne/lukke*/
 
+/*Gjør at pilen er animert opp og ned*/
 .bare-header span.icon {
     font-size: 1rem;
     transition: transform 0.2s ease;
@@ -197,9 +206,11 @@ header p {
 .bare-item.open .bare-header .icon {
     transform: rotate(180deg);
 }
+/*Gjør at pilen er animert opp og ned*/
+
 
 .header-innhold {
-    display: none;
+    display: none; /*Displayer ikke innholdet før man trykker*/
     padding: 10px 16px 12px;
     font-size: 0.9rem;
     border-top: 1px solid #e5e7eb;
@@ -211,6 +222,25 @@ header p {
     display: block;
 }
 
+/* quiz del */
+
+.quiz-wrapper {
+    max-width: 980px;
+    margin: 32px auto 60px;
+    padding: 24px 32px 32px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e7eb;
+}
+
+/* Overskrift for quiz del*/
+.quiz-wrapper h2 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 1.4rem;
+}
+/* Overskrift for quiz del*/
 .logo-link {
     display: flex;
     align-items: center;
@@ -223,3 +253,87 @@ header p {
 
 
 
+.quiz-intro {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    color: #4b5563;
+}
+
+/* et sprøsmpl*/
+.quiz-question {
+    margin-bottom: 24px;
+}
+
+.quiz-question-text {
+    margin: 4px 0 10px;
+}
+
+/*container for alternativene til spørsmålene*/
+.quiz-options {
+    display: flex;
+    flex-direction:  column;
+    gap: 8px;
+}
+/*container for alternativene til spørsmålene*/
+
+.quiz-options {
+    width: 100%;
+    text-align: left;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    background: #f9fafb;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.05s ease;
+}
+
+.quiz-options:hover {
+    transform: translateY(-1px);
+    border-color: #9ca3af;
+}
+
+.quiz-question.answered .quiz-option {
+    cursor: default;
+}
+
+/* RIKTIG ELLER FEIL */
+.quiz-option.correct {
+    background: #d1fae5;
+    border-color: #10b981; /*Riktig fagre*/
+}
+
+.quiz-option.incorrect {
+    background: #fee2e2;
+    border-color: #ef4444; /*feil farge*/
+    color: #991b1b;
+}
+/* RIKTIG ELLER FEIL */
+
+.quiz-holder {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+#quiz-score {
+    font-weight: 500;
+}
+
+#reset-quiz {
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: none;
+    background: #111827;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+#reset-quiz:hover {
+    opacity: 0.9;
+}

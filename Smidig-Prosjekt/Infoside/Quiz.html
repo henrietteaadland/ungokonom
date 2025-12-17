@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="no">
 
 <head>
     <meta charset="UTF-8">
@@ -13,20 +13,36 @@
             <img src="Images/logo.jpg" class="logo">
         </a>
         <ul>
-            <li><a href="Info.html" title="Page 1">Page 1</a></li>
-            <li><a href="Quiz.html" title="Page 2">Page 2</a></li>
+            <li><a href="Info.html" title="Page 1">Begreper</a></li>
+            <li><a href="Quiz.html" title="Page 2">Quiz</a></li>
         </ul>
         <img src="Images/1.jpg" class="user-pic">
     </nav>
 
     <section class="hero">
         <div class="hero-inner">
-            <h1>Quiz</h1>
-            <p>safasfasfafa</p>
+            <h1>Test kunnskapen din</h1>
+            <p>Her kan du teste hva du lært av begreper fra informasjonssiden.
+                Velg svaret du mener er riktig. Lykke til.
+            </p>
         </div>
     </section>
 
-    
+    <section class="quiz-wrapper">
+        <h2>Quiz om økonomiske begreper</h2>
+        <p class="quiz-intro">
+            Klikk på svaret du mener er riktig.
+        </p>
+
+        <div id="quiz"></div>
+
+        <div class="quiz-holder">
+            <p id="quiz-score">Poeng: 0/10</p>
+            <button id="reset-quiz">Start på nytt.</button>
+        </div>
+    </section>
+
+    <script src="quiz.js"></script>
 </body>
 
 </html>
