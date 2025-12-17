@@ -1,66 +1,124 @@
-/* ================= FELLES OPPSETT ================= */
-:root {
-  --brand-blue: #004B8D;
-  --brand-red: #E31837;
-  --brand-teal: #00C1A3;
-  --input-border: #e1e1e1;
-  --text-main: #333333;
-  --text-secondary: #888888;
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: white;
+    color: black;
+    height: 100vh;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-body, html { height: 100%; width: 100%; }
-
-/* ================= LOGIN CSS ================= */
+/* --- INNSTILLINGER CSS --- */
 .container {
-  display: flex;
-  height: 100vh;
-  width: 100%;
+    display: flex;
+    width: 100%;
+    height: 100%;
 }
 
-.left-panel {
-  flex: 1;
-  /* DITT VALGTE BILDE (Funker overalt) */
-  background-image: url('https://plus.unsplash.com/premium_photo-1679524520930-b810f59924b3?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
-.left-panel::after {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 75, 141, 0.1); /* Svakt blått filter over bildet */
+.sidebar {
+    width: 280px;
+    background: #77a6c9;
+    padding: 20px;
+    height: 100%;
+    box-sizing: border-box;
 }
 
-.right-panel {
-  flex: 1; background-color: #ffffff;
-  display: flex; justify-content: center; align-items: center; flex-direction: column; padding: 40px;
+.sidebar h2 { margin-bottom: 20px; }
+
+.menu-btn {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: none;
+    background: #a9c7df;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 16px;
+    text-align: left;
 }
-.login-wrapper { width: 100%; max-width: 400px; }
 
-.brand-title { color: var(--brand-blue); font-size: 1.5rem; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1.5px; }
-h2 { color: var(--text-main); font-size: 1.8rem; font-weight: 600; margin-bottom: 30px; }
+.menu-btn:hover { background: #9bbdd6; }
 
-.input-group { margin-bottom: 20px; }
-.input-group input { width: 100%; padding: 15px; border: 1px solid var(--input-border); border-radius: 8px; font-size: 1rem; background-color: #f9f9f9; transition: all 0.3s ease; }
-.input-group input:focus { outline: none; border-color: var(--brand-blue); background-color: #fff; box-shadow: 0 0 0 3px rgba(0, 75, 141, 0.1); }
-
-.actions-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; font-size: 0.9rem; color: var(--text-secondary); }
-.remember-me { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-.remember-me input { accent-color: var(--brand-blue); width: 16px; height: 16px; }
-.forgot-pass { text-decoration: none; color: var(--text-secondary); transition: color 0.2s; }
-.forgot-pass:hover { color: var(--brand-blue); }
-
-.login-btn { width: 100%; padding: 15px; background-color: var(--brand-blue); color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background-color 0.3s ease, transform 0.1s ease; text-transform: uppercase; letter-spacing: 1px; }
-.login-btn:hover { background-color: #00386b; }
-.login-btn:active { transform: scale(0.98); }
-
-.register-section { margin-top: 25px; text-align: center; font-size: 0.95rem; color: var(--text-secondary); }
-.register-section a { color: var(--brand-blue); font-weight: 600; text-decoration: none; cursor: pointer; }
-.register-section a:hover { text-decoration: underline; color: var(--brand-teal); }
-
-.error-message { color: var(--brand-red); font-size: 0.85rem; margin-top: 5px; display: none; font-weight: 600; }
-
-/* Mobil-tilpasning */
-@media (max-width: 768px) {
-  .left-panel { display: none; }
+.danger-link {
+    background-color: #d85c5c;
+    color: white;
+    font-weight: bold;
 }
+.danger-link:hover { background-color: #b93a3a; }
+
+.content { flex: 1; padding: 40px; }
+.page { display: none; }
+.page.active { display: block; }
+.page p { max-width: 750px; line-height: 1.6; font-size: 16px; }
+
+.std-input {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.save-btn { margin-top: 15px; padding: 10px 20px; cursor: pointer; }
+
+.danger {
+    background: #c44; color: white; padding: 12px 24px;
+    border: none; cursor: pointer; border-radius: 6px;
+}
+.danger:hover { background: #a33; }
+
+/* --- KRITISKE SIDER CSS --- */
+#critical-view {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: #f4f6f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.critical-container {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 400px;
+    text-align: center;
+}
+
+.critical-container h2 { margin-bottom: 20px; color: #333; }
+.critical-container p { text-align: left; color: #555; margin-bottom: 10px;}
+
+.critical-container input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.critical-actions {
+    display: flex;
+    width: 100%;
+    gap: 15px;
+}
+
+.critical-actions button {
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 50%;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.critical-actions button[value="delete"] { background-color: #cc4545; }
+.critical-actions button[value="deactivate"] { background-color: #fda80b; }
+.critical-actions button:hover { filter: brightness(0.95); }
+
+.warning { color: red; font-weight: bold; margin-top: 15px; }
