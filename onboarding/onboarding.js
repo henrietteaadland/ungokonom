@@ -7,7 +7,6 @@ document.querySelectorAll("[data-action]").forEach(btn => {
     if (action === "next") nextStep();
     if (action === "back") history.back();
     if (action === "skip") skip();
-    if (action === "budget") chooseBudget();
     if (action === "start") finish();
   });
 });
@@ -21,11 +20,6 @@ function nextStep() {
 function skip() {
   localStorage.setItem("onboard-completed", "true");
   window.location.href = "app.html";
-}
-
-function chooseBudget() {
-  localStorage.setItem("wants-budget", "true");
-  alert("Budsjett valgt (kan kobles til ekte skjema senere)");
 }
 
 function finish() {
