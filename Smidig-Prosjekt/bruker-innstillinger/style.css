@@ -1,0 +1,124 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: white;
+    color: black;
+    height: 100vh;
+}
+
+/* --- INNSTILLINGER CSS --- */
+.container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.sidebar {
+    width: 280px;
+    background: #77a6c9;
+    padding: 20px;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.sidebar h2 { margin-bottom: 20px; }
+
+.menu-btn {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: none;
+    background: #a9c7df;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 16px;
+    text-align: left;
+}
+
+.menu-btn:hover { background: #9bbdd6; }
+
+.danger-link {
+    background-color: #d85c5c;
+    color: white;
+    font-weight: bold;
+}
+.danger-link:hover { background-color: #b93a3a; }
+
+.content { flex: 1; padding: 40px; }
+.page { display: none; }
+.page.active { display: block; }
+.page p { max-width: 750px; line-height: 1.6; font-size: 16px; }
+
+.std-input {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.save-btn { margin-top: 15px; padding: 10px 20px; cursor: pointer; }
+
+.danger {
+    background: #c44; color: white; padding: 12px 24px;
+    border: none; cursor: pointer; border-radius: 6px;
+}
+.danger:hover { background: #a33; }
+
+/* --- KRITISKE SIDER CSS --- */
+#critical-view {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: #f4f6f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.critical-container {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 400px;
+    text-align: center;
+}
+
+.critical-container h2 { margin-bottom: 20px; color: #333; }
+.critical-container p { text-align: left; color: #555; margin-bottom: 10px;}
+
+.critical-container input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.critical-actions {
+    display: flex;
+    width: 100%;
+    gap: 15px;
+}
+
+.critical-actions button {
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 50%;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.critical-actions button[value="delete"] { background-color: #cc4545; }
+.critical-actions button[value="deactivate"] { background-color: #fda80b; }
+.critical-actions button:hover { filter: brightness(0.95); }
+
+.warning { color: red; font-weight: bold; margin-top: 15px; }
