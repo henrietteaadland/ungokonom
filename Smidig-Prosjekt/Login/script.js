@@ -31,7 +31,7 @@ loginForm.addEventListener('submit', (e) => {
   
   setTimeout(() => {
     // SENDER DEG TIL HENRIETTES FORSIDE
-    window.location.href = 'Smidig-Prosjekt/frontpage/front.html';
+    window.location.href = '../frontpage/front.html';
     
   }, 1000);
 });
