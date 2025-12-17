@@ -48,6 +48,20 @@ function update_car_sections_visibility() {
   }
 }
 
+function update_car_meny_visibility() {
+  const menu_step_5 = document.getElementById("menu_step_5");
+  if (!menu_step_5) {
+    return;
+  }
+
+  if (selected_loan_type === "car") {
+    menu_step_5.classList.remove("is_hidden");
+  } else {
+    menu_step_5.classList.add("is_hidden");
+  }
+}
+
+
 /*
 ------------------------------------------------------------
 DEL 2: Steg 1 – velge lånetype
@@ -71,6 +85,7 @@ function setup_step1() {
 
       */
       update_car_sections_visibility();
+      update_car_meny_visibility();
 
       /*
       ----------------------
@@ -98,6 +113,7 @@ function setup_step1() {
       */
 
       update_car_sections_visibility();
+      update_car_meny_visibility();
 
       car_card.classList.add("selected");
       if (housing_card) {
