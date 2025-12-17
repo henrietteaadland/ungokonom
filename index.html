@@ -1,74 +1,86 @@
-<div class="container" id="settings-view">
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UngØkonom - Innstillinger</title>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-    <aside class="sidebar">
-        <h2>Innstillinger</h2>
-
-        <button class="menu-btn" data-page="endre-passord">Endre passord</button>
-        <button class="menu-btn" data-page="personvern">Personvern</button>
-        <button class="menu-btn" data-page="loggut">Logg ut av alle enheter</button>
-        
-        <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 10px;">
-            <button class="menu-btn danger-link" id="goToCriticalBtn">Slett konto</button>
-        </div>
-    </aside>
-
-    <main class="content">
-
-        <section id="home" class="page active">
-            <h1>Velkommen til innstillinger</h1>
-            <p>Velg et alternativ fra menyen til venstre.</p>
-        </section>
-
-        <section id="endre-passord" class="page">
-            <h1>Endre passord</h1>
-            <input type="password" placeholder="Nytt passord" class="std-input">
-            <input type="password" placeholder="Bekreft passord" class="std-input">
-            <button class="save-btn">Lagre nytt passord</button>
-        </section>
-
-        <section id="personvern" class="page">
-            <h1>Personvern</h1>
-            <p>
-                UngØkonom er utviklet for å gi unge voksne enkel og trygg veiledning.
-                Vi deler ikke dine data med tredjeparter.
-            </p>
-        </section>
-
-        <section id="loggut" class="page">
-            <h1>Logg ut av alle enheter</h1>
-            <p>Dette vil logge deg ut på alle enheter du er innlogget på.</p>
-            <button class="danger logout-everywhere">Logg ut av alle enheter</button>
-        </section>
-
-    </main>
-</div>
-
-<div id="critical-view" style="display: none;">
-    <div class="critical-container">
-        <section>
-            <h2>Konto-innstillinger</h2>
-            <p>
-                Hvis du velger å <strong>deaktivere</strong> kontoen din, blir profilen din midlertidig gjemt. 
-                <br>
-                Når du er klar til å fortsette å spare, kan du enkelt logge inn igjen for å reaktivere kontoen din.
-            </p>
-
-            <p style="margin-top: 20px;">
-                Hvis du velger å <strong>slette</strong> kontoen din, vil alle dataene dine bli fjernet permanent.
-            </p>
-            <p class="warning">Denne handlingen kan ikke reverseres!</p>
-        </section>
-
-        <form id="passwordForm">
-            <label for="password">Skriv inn passord for å fortsette:</label>
-            <input type="password" id="password" name="password" placeholder="Passord" required>
-
-            <div class="critical-actions">
-                <button type="submit" name="action" value="deactivate" id="deactivateButton">Deaktivere Konto</button>
-                <button type="submit" name="action" value="delete" id="deleteButton">Slette Konto</button>
+    <div class="container" id="settings-view">
+        <aside class="sidebar">
+            <h2>Innstillinger</h2>
+            <button class="menu-btn" data-page="endre-passord">Endre passord</button>
+            <button class="menu-btn" data-page="personvern">Personvern</button>
+            <button class="menu-btn" data-page="loggut">Logg ut av alle enheter</button>
+            
+            <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 10px;">
+                <button class="menu-btn danger-link" id="goToCriticalBtn">Slett konto</button>
             </div>
-        </form>
-        
-        <a href="#" id="goBackBtn" style="display:block; margin-top:20px; color:#666; text-decoration:none;">← Tilbake til innstillinger</a>
+        </aside>
+
+        <main class="content">
+            <section id="home" class="page active">
+                <h1>Velkommen til innstillinger</h1>
+                <p>Velg et alternativ fra menyen til venstre.</p>
+            </section>
+
+            <section id="endre-passord" class="page">
+                <h1>Endre passord</h1>
+                <input type="password" placeholder="Nytt passord" class="std-input">
+                <input type="password" placeholder="Bekreft passord" class="std-input">
+                <button class="save-btn">Lagre nytt passord</button>
+            </section>
+
+            <section id="personvern" class="page">
+                <h1>Personvern</h1>
+                <p>
+                    UngØkonom er utviklet for å gi unge voksne enkel og trygg veiledning.
+                    Vi deler ikke dine data med tredjeparter.
+                </p>
+            </section>
+
+            <section id="loggut" class="page">
+                <h1>Logg ut av alle enheter</h1>
+                <p>Dette vil logge deg ut på alle enheter du er innlogget på.</p>
+                <button class="danger logout-everywhere">Logg ut av alle enheter</button>
+            </section>
+        </main>
     </div>
-</div>
+
+    <div id="critical-view" style="display: none;">
+        <div class="critical-container">
+            <section>
+                <h2>Konto-innstillinger</h2>
+                <p>
+                    Hvis du velger å <strong>deaktivere</strong> kontoen din, blir profilen din midlertidig gjemt. 
+                    <br>
+                    Når du er klar til å fortsette å spare, kan du enkelt logge inn igjen for å reaktivere kontoen din.
+                </p>
+
+                <p style="margin-top: 20px;">
+                    Hvis du velger å <strong>slette</strong> kontoen din, vil alle dataene dine bli fjernet permanent.
+                </p>
+                <p class="warning">Denne handlingen kan ikke reverseres!</p>
+            </section>
+
+            <form id="passwordForm">
+                <label for="password">Skriv inn passord for å fortsette:</label>
+                <input type="password" id="password" name="password" placeholder="Passord" required>
+
+                <div class="critical-actions">
+                    <button type="submit" name="action" value="deactivate" id="deactivateButton">Deaktivere Konto</button>
+                    <button type="submit" name="action" value="delete" id="deleteButton">Slette Konto</button>
+                </div>
+            </form>
+            
+            <a href="#" id="goBackBtn" style="display:block; margin-top:20px; color:#666; text-decoration:none;">← Tilbake til innstillinger</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
