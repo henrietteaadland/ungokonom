@@ -241,6 +241,16 @@ header p {
     font-size: 1.4rem;
 }
 /* Overskrift for quiz del*/
+.logo-link {
+    display: flex;
+    align-items: center;
+}
+.logo-link img {
+    width: 120px;
+    height: auto;
+    cursor: pointer;
+}
+
 
 
 .quiz-intro {
