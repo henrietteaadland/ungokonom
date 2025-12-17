@@ -26,6 +26,7 @@
     <div class="hero-inner">
       <h1>Lånekalkulator</h1>
       <p>En rask og enkel oversikt over lånekostnadene dine.</p>
+
 <!-- Glem denne foreløpig, tester en annen type indikator/meny
       <div class="stepper" aria-label="Stegindikator">
         <div class="stepper_dot">1</div>
@@ -34,6 +35,7 @@
         <div class="stepper_dot">4</div>
       </div>
     -->
+
     </div>
   </section>
 
@@ -315,16 +317,34 @@
         <div class="summary_box">
           <h3>Oppsummering</h3>
 
+          <p><strong>Verditap (mnd):</strong> <span id="car_sum_depreciation">–</span> kr</p>
+          <p><strong>Forsikring (mnd):</strong> <span id="car_sum_insurance">–</span> kr</p>
+          <p><strong>Vedlikehold (mnd):</strong> <span id="car_sum_maintenance">–</span> kr</p>
+          <p><strong>Strøm / drivstoff (mnd):</strong> <span id="car_sum_energy">–</span> kr</p>
+
+          <hr style="margin: 12px 0; opacity: 0.2;">
+
           <p>
-            <strong>Totale bilkostnader per måned:</strong>
-            <span id="car_total_monthly">–</span> kr
+            <strong>Bil (uten lån) per måned:</strong>
+            <span id="car_total_monthly"></span> kr
+          </p>
+
+          <p>
+            <strong>Lån per måned:</strong>
+            <span id="car_sum_loan">–</span> kr
+          </p>
+
+          <p>
+            <strong>Total (bil + lån) per måned:</strong>
+            <span id="car_total_with_loan_monthly">–</span> kr
           </p>
 
           <p class="step_footnote">
-            Totalt per år:
-            <strong><span id="car_total_yearly">–</span> kr</strong>
+            Totalt per år (bil + lån):
+            <strong><span id="car_total_with_loan_yearly">–</span> kr</strong>
           </p>
         </div>
+
 
         <div class="car_chart_box">
           <canvas id="car_costs_chart_canvas"></canvas>
@@ -439,6 +459,7 @@
   </main>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
     <script src="./js/charts.js" defer></script>
     <script src="./js/helpers.js" defer></script>
     <script src="./js/calculator.js" defer></script>
