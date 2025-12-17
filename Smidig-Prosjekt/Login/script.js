@@ -17,7 +17,7 @@ showLoginBtn.addEventListener('click', (e) => {
   e.preventDefault();
   registerForm.style.display = 'none';
   loginForm.style.display = 'block';
-  formTitle.innerText = 'Logg inn for å fortsette';
+  formTitle.innerText = 'Logg inn for å fortsetFte';
 });
 
 // Innlogging (via backend) videresender til forsiden/landing page
