@@ -2,12 +2,41 @@ OPPSETT FOR DATABASE OG BACKEND
 
 Databasen kjøres i en Docker container som definert i filen "docker-compose.yml"   <--- Filen ligger i root mappen
 
+ANBEFALT - Kjør filen setup.ps1 fra root mappen med ./setup.ps1
+Scripet gjør følgende steg:
+- Starter Docker Desktop (om den ikke allerede er åpen og kjører=
+- Startet PostgreSQL via docker-compose.yml
+- venter til databasen har startet og er klar
+- oppretter og eller oppdatterer nødvendige tabeller til databasen
+- Setter op backend/.env
+- Kjører npm install i backend
+- Starter backend med "npm start" i et nytt vindu
+- Starter en enkel frontend server
+- Åpner login siden i en nettleser
+- Åpner prosjektet i VS code om tiljgnegli
+
+Når scripter er kjørt ferdig vil den da:
+- Kjøre backenden på http://localhost:3000
+- Login siden vil automatisk åpnes i nettleseren
+
+Nødvendigheter for å kunne kjøre:
+- Docker Desktop
+- Node.js (med npm)
+- Powershell (Windows)
+
+
+
+
 Oppsettet:
   -Starter en PostgreSQL 16-container
   -Setter brukernavn, passord og databaenavn via miljøvariabler
   -Eksponerer databasen på port 5433
   -Bruker docker-volume /pgdata( for persistering av data 
 
+
+
+
+KAN OGSÅ KJØRE DET MANUELT
   Databaen startes fra root mappen med kommandoene:
   
   1. "docker compose up -d"
@@ -54,9 +83,6 @@ username TEXT UNIQUE NOT NULL,
 password_hash TEXT NOT NULL,
 active BOOLEAN NOT NULL DEFAULT TRUE
 );"
-
-
-
 
 
 Arkitektur oversikt:
