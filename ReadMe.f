@@ -1,4 +1,28 @@
 # Ung økonom
+
+Oppsett for database
+
+I tillegg til fronten (HTML/CSS/JS) er applikasjonen satt opp med en database for brukerhåndtering
+
+## Database - PostgreSQL i Docker
+
+databasen kjøres i en Docker-container som er i filen docker-compose.yml i rotmappen på prosjektet
+
+**Oppsette i Docker gjør følgende**
+- Starter en **PostgreSQL 16** -container
+- Setter brukernavn og passord via miljøvariabler
+- eksponerer databasene på port **5433** 
+
+**Starte/stoppe og resete databasen**
+1. starter fra root mappen:
+   - Med kommandoen "docker compse up -d"
+2. Stoppes med:
+   - "docker compose down"
+3. Full reset
+   - Dette stopper container og sletter lagret data
+   - docker compose down -v
+   - docker compose up -d
+
 Dette er en enkel webapplikasjon laget i HTML, CSS og Javascript. Løsningen består av tre sider:
 
 - Lånekalkulator: der bruker kan fylle inn sine verdier og utifra dem få visualiseringer
