@@ -23,12 +23,6 @@ databasen kjøres i en Docker-container som er i filen docker-compose.yml i rotm
    - docker compose down -v
    - docker compose up -d
 
-Dette er en enkel webapplikasjon laget i HTML, CSS og Javascript. Løsningen består av tre sider:
-
-- Lånekalkulator: der bruker kan fylle inn sine verdier og utifra dem få visualiseringer
-- Begreper: En oversikt over økonomiske begreper
-- Quiz: en enkel quiz der bruker kan teste sin kunnskap fra begreper siden
-
 ## Teknologier som er brukt
 - HTML: struktur for applikasjonen
 - CSS: styling, layout, farger osv
@@ -58,6 +52,20 @@ For å kjøre og videreutvikle løsningen trengs følgende:
    - øverst på siden ligger det en felles meny for å navigere rundt.
 
 ## Funksjonalitet
+
+
+Dette er en enkel webapplikasjon laget i HTML, CSS og Javascript. Løsningen består av tre sider:
+
+- Lånekalkulator: der bruker kan fylle inn sine verdier og utifra dem få visualiseringer
+- Begreper: En oversikt over økonomiske begreper
+- Quiz: en enkel quiz der bruker kan teste sin kunnskap fra begreper siden
+
+###Lånekalkulator
+-
+-
+-
+-
+
 
 ### Begreper (info.html i vscode)
 
