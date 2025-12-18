@@ -206,6 +206,10 @@ Scrumwise brukes til å holde oversikt over oppgaver. Hver oppgave skal ha en eg
 ## 10. Verktøy
 
 
+
+
+
+
 # Ung økonom
 
 Oppsett for database
@@ -268,7 +272,7 @@ Dette er en enkel webapplikasjon laget i HTML, CSS og Javascript. Løsningen bes
 - Begreper: En oversikt over økonomiske begreper
 - Quiz: en enkel quiz der bruker kan teste sin kunnskap fra begreper siden
 
-###Lånekalkulator
+### Lånekalkulator
 -
 -
 -
