@@ -202,13 +202,15 @@ Scrumwise brukes til å holde oversikt over oppgaver. Hver oppgave skal ha en eg
 - Kommunikasjon er viktig for å unngå dobbeltarbeid.
 
 ---
+## 10. Verktøy
 
+- GitHub
+- Scrumwise
+- VS Code
 
+Teknologier: HTML, CSS, JavaScript.
 
-
-
-
-
+---
 
 # Ung økonom
 
@@ -272,12 +274,66 @@ Dette er en enkel webapplikasjon laget i HTML, CSS og Javascript. Løsningen bes
 - Begreper: En oversikt over økonomiske begreper
 - Quiz: en enkel quiz der bruker kan teste sin kunnskap fra begreper siden
 
-### Lånekalkulator
--
--
--
--
+---
+## Lånekalkulator (loan-calc)
 
+Lånekalkulatoren er kjernen i løsningen og er utviklet som en interaktiv frontend-kalkulator i HTML, CSS og JavaScript.  
+Formålet er å gi brukeren bedre forståelse av hvordan endringer i sentrale økonomiske valg påvirker kostnader over tid.
+
+Alle beregninger skjer lokalt i nettleseren, uten lagring av data.
+
+
+
+### Boliglån – egenandel og rente
+
+For boliglån kan brukeren:
+
+- legge inn kjøpesum, egenandel, rente og nedbetalingstid
+- justere egenandel og rente for å se hvordan:
+  - månedskostnaden endres
+  - totale lånekostnader påvirkes over tid
+- sammenligne ulike scenarioer for å forstå konsekvensene av valgene
+
+Dette gjør det mulig å se hvordan selv små endringer i rente eller egenandel kan få stor betydning for totaløkonomien.
+
+
+
+### Billån – kostnader utover selve lånet
+
+Ved valg av billån utvides kalkulatoren med kostnader knyttet til det å eie bil, i tillegg til selve lånet.
+
+Brukeren kan:
+
+- beregne lånekostnader for billån
+- legge inn og justere løpende bilkostnader, som for eksempel:
+  - drivstoff eller strøm
+  - forsikring
+  - vedlikehold
+  - andre faste månedlige kostnader
+- se total månedskostnad for bil, hvor både lån og øvrige kostnader inngår
+
+Dette tydeliggjør at lånet kun er en del av biløkonomien, og at faste kostnader kan utgjøre en betydelig del av totalutgiftene.
+
+
+
+### Visualisering og interaktivitet
+
+- Resultater vises gjennom grafer og oppsummeringer
+- Endringer i brukerens input oppdaterer tall og visualiseringer fortløpende
+- Kalkulatoren er bygget stegvis for å gjøre komplekse økonomiske valg mer oversiktlige
+
+
+
+### Avgrensninger
+
+- Kalkulatoren er ment som et pedagogisk verktøy
+- Resultatene er veiledende og ikke ment som eksakte bankberegninger
+- Løsningen har:
+  - ingen innlogging
+  - ingen lagring av data
+  - ingen backend- eller databasekobling
+
+---
 
 ### Begreper (info.html i vscode)
 
