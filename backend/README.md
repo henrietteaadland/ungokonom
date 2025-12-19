@@ -13,7 +13,7 @@ Scripet gjør følgende steg:
 - Starter backend med "npm start" i et nytt vindu
 - Starter en enkel frontend server
 - Åpner login siden i en nettleser
-- Åpner prosjektet i VS code om tiljgnegli
+- Åpner prosjektet i VS code om tilgjengelig
 
 Når scripter er kjørt ferdig vil den da:
 - Kjøre backenden på http://localhost:3000
