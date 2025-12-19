@@ -227,6 +227,11 @@ databasen kjøres i en Docker-container som er i filen docker-compose.yml i rotm
 - Setter brukernavn og passord via miljøvariabler
 - eksponerer databasene på port **5433** 
 
+Kan enkelt kjøre hele applikasjonen med å kjøre scriptet setup.ps1 fra root mappen
+ kommandoen: "./setup.ps1"
+
+
+
 **Starte/stoppe og resete databasen**
 1. starter fra root mappen:
    - Med kommandoen "docker compse up -d"
